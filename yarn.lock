@@ -1710,7 +1710,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.2.0":
+"eslint@npm:^8.30.0":
   version: 8.30.0
   resolution: "eslint@npm:8.30.0"
   dependencies:
@@ -1848,7 +1848,7 @@ __metadata:
     "@types/react-dom": ^18.0.9
     "@vitejs/plugin-react": ^3.0.0
     axios: ^1.2.1
-    eslint: ^8.2.0
+    eslint: ^8.30.0
     eslint-config-airbnb: 19.0.4
     eslint-config-prettier: ^8.5.0
     eslint-plugin-import: ^2.25.3
@@ -1858,6 +1858,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.3.0
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-is: ^18.2.0
     react-redux: ^8.0.5
     react-router-dom: ^6.6.0
     styled-components: ^5.3.6
@@ -3148,7 +3149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^18.0.0":
+"react-is@npm:^18.0.0, react-is@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
