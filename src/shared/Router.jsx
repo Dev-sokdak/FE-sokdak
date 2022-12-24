@@ -6,18 +6,21 @@ import Write from '../pages/Write';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import My from '../pages/My';
+import Navbar from '../base/Navbar';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Community />} />
-        <Route path="/post/" element={<Navigate to="/" replace />} />
-        <Route path="/post/:id" element={<Post />} />
-        <Route path="/write" element={<Write />} />
+        <Route path="/" element={<Navbar />}>
+          <Route path="/" element={<Community />} />
+          <Route path="/post" element={<Navigate to="/" replace />} />
+          <Route path="/post/:id" element={<Post />} />
+          <Route path="/write" element={<Write />} />
+          <Route path="/my" element={<My />} />
+        </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/my" element={<My />} />
       </Routes>
     </BrowserRouter>
   );
