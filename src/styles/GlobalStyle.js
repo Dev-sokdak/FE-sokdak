@@ -4,19 +4,30 @@ import theme from './theme';
 
 const Globalstyle = createGlobalStyle`
 ${reset}
-*{
+* {
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'pretendard', sans-serif;
-  background-color: ${theme.colors.bgColor};
-
+    background-color: ${theme.colors.bgColor};
 }
 
-a{
+ol, ul {
+    list-style: none;
+}
+
+a {
     color: inherit;
     text-decoration: inherit;
+}
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
 }
 `;
 
