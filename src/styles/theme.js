@@ -47,8 +47,8 @@ const common = {
     box-shadow: 0 4px 4px rgb(0 0 0 / 5%);
   `,
   borderLine: `
-  border: 1px solid #e1e2e3;
-  border-radius: 5px;
+    border: 1px solid #e1e2e3;
+    border-radius: 5px;
   `,
 };
 
