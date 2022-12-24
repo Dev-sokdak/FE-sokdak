@@ -29,6 +29,13 @@ img {
     -o-user-drag: none;
     user-drag: none;
 }
+
+button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+}
 `;
 
 export default Globalstyle;
