@@ -6,18 +6,18 @@ import Write from '../pages/Write';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import My from '../pages/My';
-import Navbar from '../base/Navbar';
+import LayoutWithNavbar from '../main/LayoutWithNavbar';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbar />}>
-          <Route path="/" element={<Community />} />
-          <Route path="/post" element={<Navigate to="/" replace />} />
-          <Route path="/post/:id" element={<Post />} />
-          <Route path="/write" element={<Write />} />
-          <Route path="/my" element={<My />} />
+        <Route path="/" element={<LayoutWithNavbar />}>
+          <Route path="" element={<Community />} />
+          <Route path="post" element={<Navigate to="/" replace />} />
+          <Route path="post/:id" element={<Post />} />
+          <Route path="write" element={<Write />} />
+          <Route path="my" element={<My />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
