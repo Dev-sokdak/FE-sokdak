@@ -94,7 +94,7 @@ const StLayout = styled.div`
 
 const StContainer = styled.div`
   ${({ theme }) => theme.common.absoluteCenter}
-  max-width: 600px;
+  max-width: 400px;
   min-height: 500px;
   width: 100%;
   margin: 0 auto;
@@ -112,6 +112,11 @@ const StRegister = styled.div`
   ${({ theme }) => theme.common.borderLine};
   padding: 10px;
   justify-content: space-between;
+
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Top = styled.div`
