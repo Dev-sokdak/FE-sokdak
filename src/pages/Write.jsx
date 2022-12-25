@@ -5,35 +5,47 @@ import Photo from '../assets/picture.png';
 import Close from '../assets/cancel.png';
 
 const Write = () => {
-  const [imageSrc, setImageSrc] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [visible, setVisible] = useState(false); // preview 삭제 버튼
+  const [imageSrc, setImageSrc] = useState(''); // preview
 
   const encodeFile = (fileBlob) => {
     const reader = new FileReader();
+
     reader.readAsDataURL(fileBlob);
 
     return new Promise((resolve) => {
       reader.onload = () => {
         setImageSrc(reader.result);
         resolve();
+
+        // console.log(reader.result.split(',')[1]);
       };
     });
   };
 
   const handleImageUpload = (event) => {
     encodeFile(event.target.files[0]);
+
+    setVisible(!false);
   };
 
-  const handleImagedelete = (clickedImage) => {
-    const dataTranster = new DataTransfer();
-
-    Array.from(files)
-      .filter((file) => file !== clickedImage)
-      .forEach((file) => {
-        dataTranster.items.add(file);
-      });
-
-    setFiles(dataTranster.files);
+  // preview 삭제 <- state 비우기
+  const handleImageDelete = () => {
+    setImageSrc(null);
+    setVisible(false);
   };
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleSubmit = () => {};
 
   return (
     <StLayout>
@@ -42,7 +54,11 @@ const Write = () => {
           <StHeader>
             <div className="headerContainer">
               <div className="header">
-                <button type="submit" className="writeBtn">
+                <button
+                  type="submit"
+                  className="writeBtn"
+                  onClick={handleSubmit}
+                >
                   등록하기
                 </button>
               </div>
@@ -69,6 +85,8 @@ const Write = () => {
                 <textarea
                   className="title"
                   name="title"
+                  value={title}
+                  onChange={handleTitle}
                   placeholder="제목을 입력해주세요"
                 />
               </StTitle>
@@ -76,6 +94,8 @@ const Write = () => {
                 <textarea
                   className="content"
                   name="content"
+                  value={content}
+                  onChange={handleContent}
                   placeholder="내용을 입력해주세요"
                 />
               </StContent>
@@ -83,13 +103,15 @@ const Write = () => {
                 <ImgPreview>
                   {imageSrc && <img src={imageSrc} alt="preview-img" />}
                 </ImgPreview>
-                <button
-                  type="button"
-                  className="removePhoto"
-                  onClick={handleImagedelete}
-                >
-                  <img src={Close} alt="close icon" />
-                </button>
+                {visible && (
+                  <button
+                    type="button"
+                    className="removePhoto"
+                    onClick={handleImageDelete}
+                  >
+                    <img src={Close} alt="close icon" />
+                  </button>
+                )}
               </ShowPhoto>
             </div>
           </StWrite>
