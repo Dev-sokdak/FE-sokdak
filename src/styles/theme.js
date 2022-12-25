@@ -17,6 +17,7 @@ const colors = {
   box2: '#E5F3ED', // 연한 초록색
   box3: '#F8F2F8', // 연한 분홍색
   bgColor: '#f8f8f8',
+  bgColor2: '#FFFFFF',
 };
 
 const common = {
