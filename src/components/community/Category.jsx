@@ -1,26 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { category } from '../../utils/code';
+
+// TODO - button selected 추가
 
 const Category = () => {
-  const category = [
-    { code: 0, name: '개발' },
-    { code: 1, name: 'IT/기술' },
-    { code: 2, name: '디자인' },
-    { code: 3, name: '경영/전략' },
-    { code: 4, name: 'CS/CX' },
-    { code: 5, name: 'MD' },
-    { code: 6, name: 'HR' },
-  ];
   return (
     <InterestCategory>
       <TagBox>
         <TagButton>전체</TagButton>
-        {category.map((item) => (
+        {Object.entries(category).map((item) => (
           <TagButton
-            className={item.code === 0 ? 'selected' : ''}
-            key={item.code}
+            className={item[0] === '0' ? 'selected' : ''}
+            key={item[0]}
           >
-            {item.name}
+            {item[1]}
           </TagButton>
         ))}
       </TagBox>
@@ -63,9 +57,9 @@ const TagButton = styled.button`
   justify-content: center;
   min-width: 64px;
   height: 40px;
-  padding: 9px 22px;
+  padding: 9px 18px;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   vertical-align: middle;
   outline: none;
   color: #888;
