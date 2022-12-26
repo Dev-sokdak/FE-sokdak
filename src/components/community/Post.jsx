@@ -7,6 +7,7 @@ import UserAvatar from '../user/UserAvatar';
 import UserBadge from '../user/UserBadge';
 import PostTagList from '../post/PostTagList';
 
+// TODO - post 컴포넌트 내부 api 명세에 맞게 props로 전달받은 형태로 수정해야함
 const Post = () => {
   return (
     <PostItem>
