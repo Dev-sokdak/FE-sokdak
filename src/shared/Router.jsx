@@ -6,7 +6,7 @@ import Write from '../pages/Write';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import My from '../pages/My';
-import LayoutWithNavbar from '../main/LayoutWithNavbar';
+import LayoutWithNavbar from '../components/main/LayoutWithNavbar';
 
 function Router() {
   return (
