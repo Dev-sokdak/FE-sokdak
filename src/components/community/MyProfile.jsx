@@ -31,9 +31,9 @@ const MyProfile = () => {
             <ProfileUsername>마장동한우킬러</ProfileUsername>
             <UserBadgeBox>
               {/* 직군, 연차 정보가 부족한 경우 */}
-              {/* <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge> */}
-              <UserBadge data-id="0">웹개발</UserBadge>
-              <UserBadge>신입</UserBadge>
+              <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge>
+              {/* <UserBadge data-id="0">웹개발</UserBadge>
+              <UserBadge>신입</UserBadge> */}
             </UserBadgeBox>
           </LoggedIn>
         </UsernameWrapper>
