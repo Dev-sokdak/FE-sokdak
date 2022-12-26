@@ -84,9 +84,20 @@ const Post = () => {
 };
 
 const PostItem = styled.article`
+  position: relative;
   padding: 29px 29px 30px;
   display: block;
   margin-bottom: 2px;
+
+  &:not(:last-of-type):after {
+    display: block;
+    content: '';
+    height: 1px;
+    background-color: #ececec;
+    position: absolute;
+    bottom: -1px;
+    width: 730px;
+  }
 `;
 
 const PostItemTop = styled.div`
