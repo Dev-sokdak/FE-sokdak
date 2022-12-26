@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
 
-const CategoryBox = () => {
+const Category = () => {
   const category = [
     { code: 0, name: '개발' },
     { code: 1, name: 'IT/기술' },
@@ -13,31 +12,21 @@ const CategoryBox = () => {
     { code: 6, name: 'HR' },
   ];
   return (
-    <StCategoryBox>
-      <InterestCategory>
-        <TagBox>
-          <TagButton>전체</TagButton>
-          {category.map((item) => (
-            <TagButton
-              className={item.code === 0 ? 'selected' : ''}
-              key={item.code}
-            >
-              {item.name}
-            </TagButton>
-          ))}
-        </TagBox>
-      </InterestCategory>
-    </StCategoryBox>
+    <InterestCategory>
+      <TagBox>
+        <TagButton>전체</TagButton>
+        {category.map((item) => (
+          <TagButton
+            className={item.code === 0 ? 'selected' : ''}
+            key={item.code}
+          >
+            {item.name}
+          </TagButton>
+        ))}
+      </TagBox>
+    </InterestCategory>
   );
 };
-
-const StCategoryBox = styled.div`
-  background-color: ${theme.colors.bgColor};
-  position: fixed;
-  top: 50px;
-  z-index: 1;
-  padding-top: 50px;
-`;
 
 const InterestCategory = styled.div`
   width: 790px;
@@ -90,4 +79,4 @@ const TagButton = styled.button`
   }
 `;
 
-export default CategoryBox;
+export default Category;

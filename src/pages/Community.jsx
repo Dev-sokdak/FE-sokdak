@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import MyProfile from '../components/community/MyProfile';
 import ProfileBanner from '../components/community/ProfileBanner';
-import CategoryBox from '../components/community/CategoryBox';
+import Category from '../components/community/Category';
+import PostWriteBox from '../components/community/PostWriteBox';
 
 const Community = () => {
   return (
@@ -14,7 +15,12 @@ const Community = () => {
         </StAsideArea>
       </StAside>
       <StMain>
-        <CategoryBox />
+        <CategoryBox>
+          <Category />
+        </CategoryBox>
+        <CommunityListBox>
+          <PostWriteBox />
+        </CommunityListBox>
       </StMain>
     </StCommunity>
   );
@@ -47,6 +53,19 @@ const StMain = styled.main`
   height: 100%;
   display: flex;
   flex-direction: column;
+`;
+
+const CategoryBox = styled.div`
+  background-color: ${(props) => props.theme.colors.bgColor};
+  position: fixed;
+  top: 50px;
+  z-index: 1;
+  padding-top: 50px;
+`;
+
+const CommunityListBox = styled.div`
+  margin-top: 179px;
+  width: 790px;
 `;
 
 export default Community;
