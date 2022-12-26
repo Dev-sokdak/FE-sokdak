@@ -4,6 +4,7 @@ import MyProfile from '../components/community/MyProfile';
 import ProfileBanner from '../components/community/ProfileBanner';
 import Category from '../components/community/Category';
 import PostWriteBox from '../components/community/PostWriteBox';
+import PostList from '../components/community/PostList';
 
 const Community = () => {
   return (
@@ -20,6 +21,7 @@ const Community = () => {
         </CategoryBox>
         <CommunityListBox>
           <PostWriteBox />
+          <PostList />
         </CommunityListBox>
       </StMain>
     </StCommunity>
