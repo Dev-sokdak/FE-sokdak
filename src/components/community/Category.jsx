@@ -30,7 +30,6 @@ const InterestCategory = styled.div`
   border: 1px solid #e1e2e3;
   border-radius: 5px 5px 0 0;
   display: flex;
-  position: fixed;
   background-color: #fff;
   padding: 0;
   z-index: 1;

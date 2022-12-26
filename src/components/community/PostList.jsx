@@ -6,6 +6,13 @@ const PostList = () => {
   return (
     <StPostList>
       <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
     </StPostList>
   );
 };

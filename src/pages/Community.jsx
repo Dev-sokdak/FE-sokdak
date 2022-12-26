@@ -8,25 +8,32 @@ import PostList from '../components/community/PostList';
 
 const Community = () => {
   return (
-    <StCommunity>
-      <StAside>
-        <StAsideArea>
-          <MyProfile />
-          <ProfileBanner />
-        </StAsideArea>
-      </StAside>
-      <StMain>
-        <CategoryBox>
-          <Category />
-        </CategoryBox>
-        <CommunityListBox>
-          <PostWriteBox />
-          <PostList />
-        </CommunityListBox>
-      </StMain>
-    </StCommunity>
+    <>
+      <PaddingBox />
+      <StCommunity>
+        <StAside>
+          <StAsideArea>
+            <MyProfile />
+            <ProfileBanner />
+          </StAsideArea>
+        </StAside>
+        <StMain>
+          <CategoryBox>
+            <Category />
+          </CategoryBox>
+          <CommunityListBody>
+            <PostWriteBox />
+            <PostList />
+          </CommunityListBody>
+        </StMain>
+      </StCommunity>
+    </>
   );
 };
+
+const PaddingBox = styled.div`
+  height: 50px;
+`;
 
 const StCommunity = styled.div`
   width: 1068px;
@@ -58,15 +65,17 @@ const StMain = styled.main`
 `;
 
 const CategoryBox = styled.div`
-  background-color: ${(props) => props.theme.colors.bgColor};
+  /* background-color: ${(props) => props.theme.colors.bgColor}; */
+  display: block;
+  background-color: #f8f8f8;
   position: fixed;
   top: 50px;
-  z-index: 1;
+  z-index: 100;
   padding-top: 50px;
 `;
 
-const CommunityListBox = styled.div`
-  margin-top: 179px;
+const CommunityListBody = styled.div`
+  margin-top: 129px;
   width: 790px;
 `;
 
