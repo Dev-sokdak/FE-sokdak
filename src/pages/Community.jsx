@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import MyProfile from '../components/community/MyProfile';
 import ProfileBanner from '../components/community/ProfileBanner';
+import CategoryBox from '../components/community/CategoryBox';
 
 const Community = () => {
   return (
@@ -12,7 +13,9 @@ const Community = () => {
           <ProfileBanner />
         </StAsideArea>
       </StAside>
-      <StMain></StMain>
+      <StMain>
+        <CategoryBox />
+      </StMain>
     </StCommunity>
   );
 };
@@ -39,6 +42,11 @@ const StAsideArea = styled.div`
   row-gap: 14px;
 `;
 
-const StMain = styled.main``;
+const StMain = styled.main`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 export default Community;
