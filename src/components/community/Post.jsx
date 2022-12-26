@@ -5,6 +5,7 @@ import Like from '../../assets/gray-like.svg';
 import Comment from '../../assets/gray-comment.svg';
 import UserAvatar from '../user/UserAvatar';
 import UserBadge from '../user/UserBadge';
+import PostTagList from '../post/PostTagList';
 
 const Post = () => {
   return (
@@ -65,9 +66,7 @@ const Post = () => {
           얻어간게 많은 모임이었네요. 성장하고 싶은 여러분! 원티드살롱에서
           봐요:)
         </PostContent>
-        <PostTagList>
-          <PostTag>개발</PostTag>
-        </PostTagList>
+        <PostTagList tag={0} />
         <PostItemBottom>
           <IconBox className="likes-box">
             <img src={Like} alt="likes" />
@@ -172,25 +171,6 @@ const PostContent = styled.p`
   overflow: hidden;
   margin-bottom: 10px;
   min-height: 40px;
-`;
-
-const PostTagList = styled.div`
-  margin-bottom: 21px;
-  display: flex;
-`;
-
-const PostTag = styled.button`
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border: 1px solid #ececec;
-  box-sizing: border-box;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 400;
-  color: #888;
-  height: 26px;
-  padding: 0 8px;
 `;
 
 const PostItemBottom = styled.div`
