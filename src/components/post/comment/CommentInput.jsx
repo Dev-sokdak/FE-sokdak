@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import MyAvatar from '../MyAvatar';
-import arrow from '../../../assets/arrow.svg';
+import arrow from '../../../assets/arrow-bottom.svg';
 
 // 로그인한 유저 이름 보여주기
 // form submit 할 때 textarea value 값 보내는 기능 추가
