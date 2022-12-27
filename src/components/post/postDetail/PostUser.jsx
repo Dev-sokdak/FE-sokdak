@@ -1,34 +1,33 @@
 import React from 'react';
-import theme from '../../styles/theme';
+import theme from '../../../styles/theme';
 import styled from 'styled-components';
-import defaultProfile from '../../assets/profile_default 1.svg';
+import defaultProfile from '../../../assets/profile_default 1.svg';
 
-const PostUser = () => {
+// 게시글 작성 유저의 프로필 이미지 보여주기
+
+const PostUser = ({ data }) => {
   return (
-    <StUser>
+    <StPostUser>
       <UserAvatar>
         <img src={defaultProfile} alt="profile" />
       </UserAvatar>
       <UsernameWrapper>
-        {/* <NotLoggedIn> 삭제함 */}
-        <LoggedIn>
+        <StUser>
           <UserBox>
-            <ProfileUsername>양정동마자용</ProfileUsername>
+            <ProfileUsername>{data?.username}</ProfileUsername>
             <UserBadgeBox>
-              {/* 직군, 연차 정보가 부족한 경우 */}
-              {/* <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge> */}
               <UserBadge data-id="0">웹개발</UserBadge>
               <UserBadge>신입</UserBadge>
             </UserBadgeBox>
           </UserBox>
-          <span className="createdAt">2022.12.25</span>
-        </LoggedIn>
+          <span className="createdAt">{data?.createdAt}</span>
+        </StUser>
       </UsernameWrapper>
-    </StUser>
+    </StPostUser>
   );
 };
 
-const StUser = styled.div`
+const StPostUser = styled.div`
   display: flex;
 `;
 
@@ -60,7 +59,7 @@ const UsernameWrapper = styled.div`
   color: ${theme.colors.text3};
 `;
 
-const LoggedIn = styled.div`
+const StUser = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
