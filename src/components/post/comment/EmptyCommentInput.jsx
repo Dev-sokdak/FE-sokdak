@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
+import theme from '../../../styles/theme';
 import arrow from '../../assets/arrow.svg';
 
 const EmptyCommentInput = () => {
+  const navigate = useNavigate();
+
+  const LinkToCommunity = () => {
+    navigate('/');
+  };
+
   return (
     <>
       <Bottom>
@@ -17,12 +24,10 @@ const EmptyCommentInput = () => {
         </Link>
       </Bottom>
       <StBtn>
-        <Link to={`/`}>
-          <button type="button">
-            <img src={arrow} alt="arrow" />
-            목록으로
-          </button>
-        </Link>
+        <button type="button" onClick={LinkToCommunity}>
+          <img src={arrow} alt="arrow" />
+          목록으로
+        </button>
       </StBtn>
     </>
   );

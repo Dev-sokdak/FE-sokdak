@@ -1,26 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
-import MyAvatar from './MyAvatar';
-import arrow from '../../assets/arrow.svg';
+import theme from '../../../styles/theme';
+import MyAvatar from '../MyAvatar';
+import arrow from '../../../assets/arrow.svg';
 
+// 로그인한 유저 이름 보여주기
 // form submit 할 때 textarea value 값 보내는 기능 추가
 
 const CommentInput = () => {
+  const navigate = useNavigate();
   const [comment, setComment] = useState('');
 
   const handleComment = (e) => {
     setComment(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const LinkToCommunity = () => {
+    navigate('/');
+  };
 
   return (
     <>
       <Top>
         <MyAvatar />
-        <div className="myName">양정동마자용</div>
+        <div className="myName">로그인한 사용자 이름</div>
       </Top>
       <Bottom>
         <form>
@@ -33,12 +37,10 @@ const CommentInput = () => {
         </form>
       </Bottom>
       <StBtn>
-        <Link to={`/`}>
-          <button type="button" onClick={handleSubmit}>
-            <img src={arrow} alt="arrow" />
-            목록으로
-          </button>
-        </Link>
+        <button type="button" onClick={LinkToCommunity}>
+          <img src={arrow} alt="arrow" />
+          목록으로
+        </button>
       </StBtn>
     </>
   );
