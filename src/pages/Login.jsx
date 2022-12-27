@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LogoLogin from '../assets/logo_login.svg';
 import { useForm } from 'react-hook-form';
@@ -69,6 +70,9 @@ const Login = () => {
               >
                 로그인
               </StButton>
+              <Link to="/register">
+                <Caption>회원가입</Caption>
+              </Link>
             </form>
           </Main>
         </StLogin>
@@ -195,8 +199,8 @@ const StButton = styled.button`
     color: #ccc;
   }
 
-  .loginBtn {
-    margin-top: 30px;
+  &.loginBtn {
+    margin: 30px 0 10px 0;
   }
 `;
 
@@ -208,6 +212,17 @@ const Typography = styled.p`
   margin-bottom: 8px;
   margin-top: 0px;
   color: #fe415c;
+`;
+
+const Caption = styled.p`
+  color: #939393;
+  font-weight: 600;
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-decoration: underline;
 `;
 
 export default Login;

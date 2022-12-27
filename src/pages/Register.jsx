@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import useDidMountEffect from '../hooks/useDidMountEffect';
 import styled from 'styled-components';
 import Logo from '../assets/logo_mini.svg';
@@ -122,6 +123,9 @@ const Register = () => {
               >
                 회원가입
               </StButton>
+              <Link to="/login">
+                <Caption>로그인</Caption>
+              </Link>
             </form>
           </Main>
         </StRegister>
@@ -272,6 +276,17 @@ const Typography = styled.p`
   margin-bottom: 8px;
   margin-top: 0px;
   color: #fe415c;
+`;
+
+const Caption = styled.p`
+  color: #939393;
+  font-weight: 600;
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-decoration: underline;
 `;
 
 export default Register;
