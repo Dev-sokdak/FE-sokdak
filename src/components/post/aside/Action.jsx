@@ -1,24 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import like from '../../assets/like.svg';
-import comment from '../../assets/comment.svg';
+import like from '../../../assets/like.svg';
+import comment from '../../../assets/comment.svg';
 
-// 좋아요, 댓글 개수 기능 추가
-
-const Action = () => {
+const Action = ({ data }) => {
   return (
     <StAction>
       <div className="likeBox box">
         <button type="button">
           <img src={like} alt="like" />
         </button>
-        <span>0</span>
+        <span>{data?.boardLike}</span>
       </div>
       <div className="commentBox box">
         <button type="button">
           <img src={comment} alt="comment" />
         </button>
-        <span>0</span>
+        <span>{data?.commentList.length}</span>
       </div>
     </StAction>
   );
@@ -52,6 +50,7 @@ const StAction = styled.div`
       line-height: 100%;
       font-size: 13px;
       font-weight: 700;
+      color: #333;
     }
   }
 `;
