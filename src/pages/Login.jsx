@@ -5,6 +5,7 @@ import LogoLogin from '../assets/logo_login.svg';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import KakaoLoginBtn from '../components/login/KakaoLoginBtn';
 
 const schema = yup.object().shape({
   email: yup.string().email('올바른 이메일을 입력해주세요.').required(''),
@@ -73,6 +74,7 @@ const Login = () => {
               <Link to="/register">
                 <Caption>회원가입</Caption>
               </Link>
+              <KakaoLoginBtn />
             </form>
           </Main>
         </StLogin>
@@ -221,7 +223,7 @@ const Caption = styled.p`
   font-size: 12px;
   line-height: 16px;
   margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 40px;
   text-decoration: underline;
 `;
 
