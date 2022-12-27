@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import defaultProfile from '../../assets/profile_default 1.svg';
 
-// 내 프로필 사진 보여주기
+// 로그인한 유저의 프로필 사진 보여주기
 
 const MyAvatar = () => {
   return (
