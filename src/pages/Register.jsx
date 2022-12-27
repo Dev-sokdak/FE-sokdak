@@ -1,23 +1,62 @@
 import React, { useState } from 'react';
+import useDidMountEffect from '../hooks/useDidMountEffect';
 import styled from 'styled-components';
 import Logo from '../assets/logo_mini.svg';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('이메일형식이 적합하지 않습니다.')
+    .required('이메일을 인증해주세요'),
+  password: yup
+    .string()
+    .min(8, '비밀번호는 최소 8자리입니다')
+    .max(16, '비밀번호는 최대 16자리입니다')
+    .matches(
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[^\s]*$/,
+      '공백을 제외한 특수문자, 알파벳, 숫자를 포함하여 입력해주세요',
+    )
+    .required('비밀번호를 입력해주세요'),
+  confirmPw: yup
+    .string()
+    .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다')
+    .required('비밀번호를 한번 더 입력해주세요'),
+});
 
 const Register = () => {
-  const [input, setInput] = useState({ email: '', password: '', confirm: '' });
+  // 이메일 유효 여부
+  const [emailValid, setEmailValid] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onChange',
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInput({
-      ...input,
-      [name]: value,
-    });
+  const onClickLogin = (data) => {
+    console.log(data);
   };
 
-  const handleRegister = () => {
-    if (input.email === '' || input.password === '' || input.confirm === '') {
-      alert('모두 입력해주세요');
+  const checkDuplicated = () => {
+    // TODO - 이메일 중복 체크 API 연동
+    setEmailValid(true);
+  };
+
+  useDidMountEffect(() => {
+    if (!emailValid) {
+      setError('email', { type: 'custom', message: '사용중인 이메일입니다.' });
+    } else {
+      clearErrors('email', { type: 'custom' });
     }
-  };
+  }, [emailValid]);
 
   return (
     <StLayout>
@@ -29,51 +68,57 @@ const Register = () => {
             </StLogo>
           </Top>
           <Main>
-            <form>
+            <form onSubmit={handleSubmit(onClickLogin)}>
               <h1>회원가입</h1>
               <div className="StLabel">
                 <label>이메일</label>
               </div>
               <div className="inputBox">
                 <input
-                  type="email"
-                  placeholder="이메일을 입력해주세요."
+                  id="email"
                   name="email"
+                  placeholder="이메일을 입력해주세요."
                   className="emailInput input"
-                  value={input.email}
-                  onChange={handleChange}
+                  {...register('email', { required: true })}
                 />
-                <button className="emailBtn btn">중복확인</button>
+                <button
+                  disabled={!getValues('email') || errors.email}
+                  className="emailBtn btn"
+                  onClick={checkDuplicated}
+                >
+                  중복확인
+                </button>
               </div>
-              form help text
+              <Typography>
+                {errors.emailCheck?.message || errors.email?.message}
+              </Typography>
               <div className="StLabel">
                 <label>비밀번호</label>
               </div>
               <input
                 type="password"
-                placeholder="비밀번호를 입력해주세요."
+                id="password"
                 name="password"
+                placeholder="비밀번호를 입력해주세요."
                 className="pwInput input"
-                value={input.password}
-                onChange={handleChange}
+                {...register('password', { required: true })}
               />
-              form help text
+              <Typography>{errors.password?.message}</Typography>
               <div className="StLabel">
                 <label>비밀번호 확인</label>
               </div>
               <input
                 type="password"
+                name="confirmPw"
                 placeholder="비밀번호를 다시 입력해주세요."
-                name="confirm"
                 className="confirmPwInput input"
-                value={input.confirm}
-                onChange={handleChange}
+                {...register('confirmPw', { required: true })}
               />
-              form help text
+              <Typography>{errors.confirmPw?.message}</Typography>
               <button
+                disabled={!isValid}
                 type="submit"
                 className="registerBtn btn"
-                onClick={handleRegister}
               >
                 회원가입
               </button>
@@ -157,7 +202,9 @@ const Main = styled.div`
   }
 
   .inputBox {
-    ${({ theme }) => theme.common.flexBetween}
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
 
   .input {
@@ -180,7 +227,6 @@ const Main = styled.div`
     height: 50px;
     min-height: 50px;
     border-radius: 25px;
-    background-color: #f2f4f7;
     border: none;
     cursor: default;
     // 글자
@@ -189,14 +235,14 @@ const Main = styled.div`
     text-align: center;
     letter-spacing: 0.0056em;
     line-height: 24px;
-    color: #ccc;
-  }
-
-  .btn:active {
-    /* border: none; */
-    cursor: pointer;
     background-color: ${({ theme }) => theme.colors.primary1};
     color: ${({ theme }) => theme.colors.text5};
+    cursor: pointer;
+  }
+
+  .btn:disabled {
+    background-color: #f2f4f7;
+    color: #ccc;
   }
 
   .emailBtn {
@@ -208,6 +254,16 @@ const Main = styled.div`
     margin-bottom: 10px;
     margin-top: 30px;
   }
+`;
+
+const Typography = styled.p`
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  margin-bottom: 8px;
+  margin-top: 0px;
+  color: #fe415c;
 `;
 
 export default Register;

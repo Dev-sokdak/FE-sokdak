@@ -6,6 +6,7 @@ import Comment from '../../assets/gray-comment.svg';
 import UserAvatar from '../user/UserAvatar';
 import UserBadge from '../user/UserBadge';
 import PostTagList from '../post/PostTagList';
+import { elapsedTime } from '../../utils/date';
 
 // TODO - post 컴포넌트 내부 api 명세에 맞게 props로 전달받은 형태로 수정해야함
 const Post = () => {
@@ -26,7 +27,7 @@ const Post = () => {
                 </UserBadge>
               </AuthorCareer>
             </AuthorInfo>
-            <CreatedAt>2시간 전</CreatedAt>
+            <CreatedAt>{elapsedTime('2022-12-26T22:46:28.9945707')}</CreatedAt>
           </VerticalBox>
         </AuthorBox>
       </PostItemTop>
