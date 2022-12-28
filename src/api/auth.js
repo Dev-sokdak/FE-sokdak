@@ -1,3 +1,4 @@
+import useToast from '../hooks/useToast';
 import { instance } from './core/axios';
 
 // 일반 로그인
@@ -7,7 +8,8 @@ const Login = async (auth) => {
     const response = await instance.post("/api/user/login", auth);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    // return error.response.data.message;
+    useToast('에러가 발생했습니다', 'error');
   }
 }
 
@@ -18,7 +20,7 @@ const SignUp = async (auth) => {
     const response = await instance.post("/api/user/signup", auth);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 }
 
@@ -29,16 +31,16 @@ const KakaoLogin = async (code) => {
     const response = await instance.post(`/api/user/loginKakao?code=${code}`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 }
 
 const emailValidCheck = async (email) => {
   try {
-    const response = await instance.get(`/api/user/signup/checkId/${email}`);
+    const response = await instance.get(`/api/user/signup/checkId/?userId=${email}`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 }
 

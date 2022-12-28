@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 인스턴스 생성
 export const instance = axios.create({
-  BaseUrl : "http://54.180.86.147:80",
+  baseURL : "http://54.180.86.147:80",
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
