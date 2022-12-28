@@ -5,7 +5,7 @@ import Action from '../aside/Action';
 const BottomAction = ({ data }) => {
   return (
     <StBottomAction>
-      <Action data={data} style={{ padding: '0 -6px' }} />
+      <Action data={data} />
     </StBottomAction>
   );
 };
