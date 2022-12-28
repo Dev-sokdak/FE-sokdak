@@ -1,7 +1,7 @@
 import React from 'react';
 import theme from '../../../styles/theme';
 import styled from 'styled-components';
-import { elapsedTime } from '../../../utils/date';
+import { formatTime } from '../../../utils/date';
 import defaultProfile from '../../../assets/profile_default 1.svg';
 
 // 게시글 작성 유저의 프로필 이미지 보여주기
@@ -21,7 +21,7 @@ const PostUser = ({ data }) => {
               <UserBadge>신입</UserBadge>
             </UserBadgeBox>
           </UserBox>
-          <span className="createdAt">{elapsedTime(`{data?.createdAt}`)}</span>
+          <span className="createdAt">{formatTime(data?.createdAt)}</span>
         </StUser>
       </UsernameWrapper>
     </StPostUser>
