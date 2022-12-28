@@ -1,37 +1,37 @@
 import React from 'react';
 import theme from '../../styles/theme';
 import styled from 'styled-components';
+import PostTagList from './PostTagList';
 import PostUser from './postDetail/PostUser';
 import BottomAction from './postDetail/BottomAction';
 import SharePost from './postDetail/SharePost';
-import EditPost from './postDetail/EditPost';
+import DotPost from './postDetail/DotPost';
 // import EmptyCommentList from '../../components/post/EmptyCommentList';
 import CommentList from '../../components/post/comment/CommentList';
 // import EmptyCommentInput from './EmptyCommentInput';
 import CommentInput from '../../components/post/comment/CommentInput';
 
-// 게시글 상세 정보(제목, 내용, 태그들) 보여주기
-// 로그인 유무에 따라 댓글 리스트와 댓글 입력 컴포넌트 다르게 보여주기
+// TODO 댓글 유무에 따라 댓글 리스트 다르게 보여주기
+// 로그인 유무에 따라 댓글 input 컴포넌트 다르게 보여줄지?
 
 const PostLayout = ({ data }) => {
-  // console.log(data.commentList);
   return (
     <StPostLayout>
       <StPostWrapper>
         <PostUser data={data} />
-        <StContent>
-          <h1>{data?.title}</h1>
-          <div className="content">{data?.content}</div>
-          <div className="imgBox">
-            <img src={data.image} />
-          </div>
-          <PostTags>선택한 태그들</PostTags>
-          <div style={({ display: 'flex' }, { position: 'relative' })}>
-            <BottomAction data={data} />
-            <SharePost />
-            <EditPost />
-          </div>
-        </StContent>
+        <Title>{data?.title}</Title>
+        <Content>{data?.content}</Content>
+        <ImageBox>
+          <img src={data.image} />
+        </ImageBox>
+
+        {/* <StPostTagList>선택한 태그들</StPostTagList> */}
+        <PostTagList tag={data.category} />
+        <StBottomBox>
+          <BottomAction data={data} />
+          <SharePost />
+          <DotPost />
+        </StBottomBox>
       </StPostWrapper>
       <StCommentWrapper>
         {/* 댓글이 없는 경우 */}
@@ -58,40 +58,43 @@ const StPostWrapper = styled.div`
   ${theme.common.borderLine};
 `;
 
-const StContent = styled.div`
-  h1 {
-    font-size: ${theme.fontSizes.title};
-    font-weight: 700;
-    color: ${theme.colors.text2};
-    word-break: break-all;
-    margin-top: 88px;
-    margin-bottom: 32px;
-  }
+const Title = styled.div`
+  font-size: ${theme.fontSizes.title};
+  font-weight: 700;
+  color: ${theme.colors.text2};
+  word-break: break-all;
+  margin-top: 88px;
+  margin-bottom: 32px;
+`;
 
-  .content {
-    max-width: 710px;
-    font-size: ${theme.fontSizes.paragraph};
-    line-height: 1.65;
-    margin-bottom: 80px;
-    color: ${theme.colors.text2};
-    text-align: left;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    word-break: keep-all;
-  }
+const Content = styled.div`
+  max-width: 710px;
+  font-size: ${theme.fontSizes.paragraph};
+  line-height: 1.65;
+  margin-bottom: 20px;
+  color: ${theme.colors.text2};
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: keep-all;
+`;
 
-  .imgBox {
-    margin-bottom: 20px;
+const ImageBox = styled.div`
+  margin-bottom: 80px;
 
-    img {
-      width: 100%;
-    }
+  img {
+    width: 100%;
   }
 `;
 
-const PostTags = styled.div`
+const StPostTagList = styled.div`
   display: flex;
   margin-bottom: 44px;
+`;
+
+const StBottomBox = styled.div`
+  display: flex;
+  position: relative;
 `;
 
 const StCommentWrapper = styled.div`
