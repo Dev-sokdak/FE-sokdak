@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import useToast from '../../../hooks/useToast';
 import share from '../../../assets/share.png';
 
 const SharePost = () => {
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(window.location.href);
-    alert('링크가 복사되었습니다'); // 테스트
+    useToast(`링크가 복사되었습니다.`, 'success');
   };
 
   return (
