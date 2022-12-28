@@ -1,25 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LogoLogin from '../assets/logo_login.svg';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import KakaoLoginBtn from '../components/login/KakaoLoginBtn';
+import authAPI from '../api/auth';
+import useToast from '../hooks/useToast';
+
+const schema = yup.object().shape({
+  email: yup.string().email('올바른 이메일을 입력해주세요.').required(''),
+  password: yup.string().required('비밀번호를 입력해주세요.'),
+});
 
 const Login = () => {
-  const [input, setInput] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: 'onChange',
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-
-    console.log(input);
+  const handleLogin = async (data) => {
+    await authAPI
+      .Login({ userId: data.email, password: data.password })
+      .then((res) => {
+        if (res.data.statusCode === 200) {
+          useToast(`${res.data.msg}`, 'success');
+          navigate('/');
+        } else {
+          useToast(`${res.data.msg}`, 'error');
+        }
+      })
+      .catch((error) => useToast('에러가 발생했습니다.', 'error'));
   };
 
-  const handleLogin = () => {
-    if (input.email === '' || input.password === '') {
-      alert('모두 입력해주세요');
-    }
-  };
+  // const handleKakaoLogin = async () => {
+  //   // await authAPI.KakaoLogin
+  // };
 
   return (
     <StLayout>
@@ -31,37 +53,36 @@ const Login = () => {
             </StLogo>
           </Top>
           <Main>
-            <form>
-              <h1>로그인</h1>
-              <div className="StLabel">
+            <form onSubmit={handleSubmit(handleLogin)}>
+              <Title>로그인</Title>
+              <StLabel>
                 <label>이메일</label>
-              </div>
-              <input
-                type="email"
-                placeholder="이메일을 입력해주세요."
+              </StLabel>
+              <StInput
                 name="email"
-                className="emailInput input"
-                value={input.email}
-                onChange={handleChange}
+                placeholder="이메일을 입력해주세요."
+                className={errors.email ? 'error' : ''}
+                {...register('email', { required: true })}
               />
-              <div className="StLabel">
+              <Typography>{errors.email?.message}</Typography>
+              <StLabel>
                 <label>비밀번호</label>
-              </div>
-              <input
+              </StLabel>
+              <StInput
+                name="password"
                 type="password"
                 placeholder="비밀번호를 입력해주세요."
-                name="password"
-                className="pwInput input"
-                value={input.password}
-                onChange={handleChange}
+                className={errors.password ? 'error' : ''}
+                {...register('password', { required: true })}
               />
-              <button
-                type="submit"
-                className="loginBtn btn"
-                onClick={handleLogin}
-              >
+              <Typography>{errors.password?.message}</Typography>
+              <StButton type="submit" className="loginBtn" disabled={!isValid}>
                 로그인
-              </button>
+              </StButton>
+              <Link to="/register">
+                <Caption>회원가입</Caption>
+              </Link>
+              <KakaoLoginBtn />
             </form>
           </Main>
         </StLogin>
@@ -120,18 +141,18 @@ const Main = styled.div`
   position: relative;
   padding: 20px;
   min-height: 600px;
+`;
 
-  h1 {
-    color: ${({ theme }) => theme.colors.text1};
-    font-weight: 700;
-    text-align: center;
-    font-size: ${({ theme }) => theme.fontSizes.title};
-    line-height: 38px;
-  }
+const Title = styled.h1`
+  color: ${({ theme }) => theme.colors.text1};
+  font-weight: 700;
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.title};
+  line-height: 38px;
+`;
 
-  .StLabel {
-    margin: 24px 0px 7px;
-  }
+const StLabel = styled.div`
+  margin: 24px 0px 7px;
 
   label {
     color: #888;
@@ -141,49 +162,77 @@ const Main = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.paragraph};
     line-height: 20px;
   }
+`;
 
-  .input {
-    width: 100%;
-    height: 50px;
-    min-height: 50px;
-    padding: 0px 12px;
-    margin-bottom: 10px;
-    outline: none;
-    background-color: transparent;
-    ${({ theme }) => theme.common.borderLine}
-    color: ${({ theme }) => theme.colors.text2};
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: 400;
+const StInput = styled.input`
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+  padding: 0px 12px;
+  margin-bottom: 10px;
+  outline: none;
+  background-color: transparent;
+  ${({ theme }) => theme.common.borderLine}
+  color: ${({ theme }) => theme.colors.text2};
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 400;
+
+  &:focus {
+    border: 1px solid #36f;
   }
 
-  .btn {
-    width: 100%;
-    height: 50px;
-    min-height: 50px;
-    border-radius: 25px;
+  &.error {
+    border: 1px solid #fe415c;
+  }
+`;
+
+const StButton = styled.button`
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+  border-radius: 25px;
+  border: none;
+  cursor: default;
+  // 글자
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.0056em;
+  line-height: 24px;
+  background-color: ${({ theme }) => theme.colors.primary1};
+  color: ${({ theme }) => theme.colors.text5};
+  cursor: pointer;
+
+  &:disabled {
     background-color: #f2f4f7;
-    border: none;
-    cursor: default;
-    // 글자
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
-    letter-spacing: 0.0056em;
-    line-height: 24px;
     color: #ccc;
   }
 
-  .btn:active {
-    /* border: none; */
-    cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.primary1};
-    color: ${({ theme }) => theme.colors.text5};
+  &.loginBtn {
+    margin: 30px 0 10px 0;
   }
+`;
 
-  .loginBtn {
-    margin-top: 30px;
-  }
+const Typography = styled.p`
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  margin-bottom: 8px;
+  margin-top: 0px;
+  color: #fe415c;
+`;
+
+const Caption = styled.p`
+  color: #939393;
+  font-weight: 600;
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 5px;
+  margin-bottom: 40px;
+  text-decoration: underline;
 `;
 
 export default Login;
