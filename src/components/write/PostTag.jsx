@@ -1,83 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import TagModal from './TagModal';
+import { category } from '../../utils/code';
 import Plus from '../../assets/plus.png';
 
 const PostTag = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selected, setSelected] = useState();
+
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
+  console.log(category[selected]);
+
   return (
     <StPostTag>
-      <div className="tagMessage">
+      <TagMessage>
         태그 선택<span>(1개)</span>
         <em>*</em>
-      </div>
-      <div className="tagWrapper">
-        <button type="button" className="openTag">
-          <img src={Plus} className="plus" />
-        </button>
-        <button type="button" className="selectedTag" />
-        <div className="tagSlider">{/* 선택된 태그들이 들어갈 자리 */}</div>
-      </div>
+      </TagMessage>
+      <TagWrapper>
+        <OpenTag type="button" onClick={showModal}>
+          <img src={Plus} alt="plus icon" className="plus" />
+        </OpenTag>
+        {modalOpen && (
+          <TagModal
+            setModalOpen={setModalOpen}
+            selected={selected}
+            setSelected={setSelected}
+          />
+        )}
+        {modalOpen ? (
+          <Tag type="button"></Tag>
+        ) : (
+          <Tag type="button">{category[selected]}</Tag>
+        )}
+      </TagWrapper>
     </StPostTag>
   );
 };
 
-// 태그 영역
 const StPostTag = styled.div`
   margin-bottom: 50px;
-  .StTagPanel {
+`;
+
+const TagMessage = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.text3};
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 10px;
+
+  span {
+    color: ${({ theme }) => theme.colors.text4};
+    margin: 0 4px;
   }
 
-  .tagMessage {
-    display: flex;
-    align-items: center;
-    color: ${({ theme }) => theme.colors.text3};
-    font-weight: 700;
-    font-size: 15px;
-    margin-bottom: 10px;
-
-    span {
-      color: ${({ theme }) => theme.colors.text4};
-      margin: 0 4px;
-    }
-
-    em {
-      color: #fe415c;
-    }
+  em {
+    color: #fe415c;
   }
+`;
 
-  .tagWrapper {
-    display: flex;
+const TagWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-    button {
-      border: 0;
-      cursor: pointer;
-    }
+const OpenTag = styled.div`
+  border: 0;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 
-    .openTag {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-    }
-
-    .plus {
-      height: 50%;
-    }
-
-    .selectedTag {
-      margin-left: 10px;
-      width: 84px;
-      height: 34px;
-      background-color: transparent;
-      border: 2px dashed #e1e2e3;
-      border-radius: 25px;
-    }
-  }
-
-  // tag 선택하면 나타나는 영역(수정 필요)
-  .tagSlider {
+  .plus {
     width: 100%;
-    display: flex;
-    /* position: relative; */
+    height: 100%;
   }
+`;
+
+const Tag = styled.div`
+  margin-left: 10px;
+  width: 90px;
+  height: 34px;
+  background-color: transparent;
+  border: 2px dashed #e1e2e3;
+  border-radius: 25px;
+  text-align: center;
+  padding: 8px 0;
 `;
 
 export default PostTag;
