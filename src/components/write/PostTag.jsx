@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TagModal from './TagModal';
 import { category } from '../../utils/code';
 import Plus from '../../assets/plus.png';
+import close from '../../assets/close.png';
 
 const PostTag = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,7 +13,9 @@ const PostTag = () => {
     setModalOpen(true);
   };
 
-  console.log(category[selected]);
+  const handleCancelTag = () => {
+    setSelected('');
+  };
 
   return (
     <StPostTag>
@@ -31,10 +34,13 @@ const PostTag = () => {
             setSelected={setSelected}
           />
         )}
-        {modalOpen ? (
-          <Tag type="button"></Tag>
+        {!modalOpen && selected ? (
+          <Tag type="button" className="selected" onClick={handleCancelTag}>
+            {category[selected]}
+            <img src={close} alt="close icon" />
+          </Tag>
         ) : (
-          <Tag type="button">{category[selected]}</Tag>
+          <Tag type="button"></Tag>
         )}
       </TagWrapper>
     </StPostTag>
@@ -82,14 +88,36 @@ const OpenTag = styled.div`
 `;
 
 const Tag = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-left: 10px;
-  width: 90px;
+  width: 110px;
   height: 34px;
   background-color: transparent;
   border: 2px dashed #e1e2e3;
   border-radius: 25px;
   text-align: center;
   padding: 8px 0;
+
+  &.selected {
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 0 10px 0 12px;
+    background: ${({ theme }) => theme.colors.bgColors2};
+    border: 1px solid #3366ff;
+    font-weight: 900;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.primary1};
+
+    img {
+      margin-left: 4px;
+      width: 14px;
+      height: 14px;
+      filter: invert(33%) sepia(89%) saturate(2922%) hue-rotate(218deg)
+        brightness(99%) contrast(103%);
+    }
+  }
 `;
 
 export default PostTag;
