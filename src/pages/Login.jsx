@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LogoLogin from '../assets/logo_login.svg';
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const {
     register,
@@ -25,6 +26,8 @@ const Login = () => {
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
+
+  const code = searchParams.get('code');
 
   const handleLogin = async (data) => {
     await authAPI
@@ -41,9 +44,26 @@ const Login = () => {
       .catch((error) => useToast('에러가 발생했습니다.', 'error'));
   };
 
-  // const handleKakaoLogin = async () => {
-  //   // await authAPI.KakaoLogin
-  // };
+  const KakaoLogin = async (code) => {
+    await authAPI
+      .KakaoLogin(code)
+      .then((res) => {
+        if (res.data.statusCode === 200) {
+          setCookie(res.headers.authorization);
+          useToast(`${res.data.msg}`, 'success');
+          navigate('/');
+        } else {
+          useToast(`${res.data.msg}`, 'error');
+        }
+      })
+      .catch((error) => useToast('에러가 발생했습니다.', 'error'));
+  };
+
+  useEffect(() => {
+    if (code) {
+      KakaoLogin(code);
+    }
+  }, [code]);
 
   return (
     <StLayout>

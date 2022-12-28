@@ -6,7 +6,6 @@ const cookies = new Cookies();
 
 export const setCookie = (token) => {
   const expireDate = new Date();
-  console.log(token);
   expireDate.setMinutes(expireDate.getMinutes() + 60);
   cookies.set(TOKEN_ID, token, {
     path: '/',
