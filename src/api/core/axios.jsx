@@ -4,7 +4,7 @@ import useToast from '../../hooks/useToast';
 
 // 인스턴스 생성
 export const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
   headers: {
     'Access-Control-Allow-Origin': '*',
