@@ -1,18 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { category } from '../../utils/code';
 
-// TODO - button selected 추가
-
 const Category = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selected, setSelected] = useState('');
+
+  const handleClick = (event) => {
+    setSelected(event.target.id);
+  };
+
+  useEffect(() => {
+    const currentParams = Object.fromEntries([...searchParams]);
+    setSelected(currentParams.category ?? '전체');
+  }, []);
+
+  useEffect(() => {
+    selected === '전체'
+      ? setSearchParams()
+      : setSearchParams({ category: selected });
+  }, [selected]);
+
   return (
     <InterestCategory>
       <TagBox>
-        <TagButton>전체</TagButton>
+        <TagButton
+          className={'전체' === selected ? 'selected' : ''}
+          id="전체"
+          onClick={handleClick}
+        >
+          전체
+        </TagButton>
         {Object.entries(category).map((item) => (
           <TagButton
-            className={item[0] === '0' ? 'selected' : ''}
+            className={item[0] === selected ? 'selected' : ''}
             key={item[0]}
+            id={item[0]}
+            onClick={handleClick}
           >
             {item[1]}
           </TagButton>

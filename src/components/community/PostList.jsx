@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Post from './Post';
 import postAPI from '../../api/post';
 import useToast from '../../hooks/useToast';
 
-// TODO - 지역별 GET ,스켈레톤 UI, 인피니트 스크롤
+// TODO - 스켈레톤 UI, 인피니트 스크롤
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const [searchParams] = useSearchParams();
 
-  const getPosts = async () => {
-    await postAPI
-      .getPosts()
-      .then((res) => setPosts(res.data.content))
-      .catch((error) => useToast('정보를 가져올 수 없습니다.', 'error'));
+  const getPosts = async (category) => {
+    if (category) {
+      await postAPI
+        .getPostsByCategory(category)
+        .then((res) => setPosts(res.data.content))
+        .catch((error) => useToast('정보를 가져올 수 없습니다.', 'error'));
+    } else {
+      await postAPI
+        .getPosts()
+        .then((res) => setPosts(res.data.content))
+        .catch((error) => useToast('정보를 가져올 수 없습니다.', 'error'));
+    }
   };
 
   useEffect(() => {
-    getPosts();
-  }, []);
+    const currentParams = Object.fromEntries([...searchParams]);
+    getPosts(currentParams.category);
+    console.log(posts);
+  }, [searchParams]);
 
   return (
     <StPostList>

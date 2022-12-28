@@ -17,7 +17,7 @@ const Post = ({ post }) => {
       <PostItemTop>
         <AuthorBox>
           <AvatarWrapper>
-            <UserAvatar image={post.image} />
+            <UserAvatar image={post.profileImage} />
           </AvatarWrapper>
           <VerticalBox>
             <AuthorInfo>
