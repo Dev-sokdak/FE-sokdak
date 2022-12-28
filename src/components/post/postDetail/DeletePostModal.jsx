@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useToast from '../../../hooks/useToast';
 
 // TODO deletePost api 연동
 
@@ -12,6 +13,7 @@ const DeletePostModal = ({ setModalOpen }) => {
   };
 
   const handleDelete = () => {
+    useToast(`삭제되었습니다.`, 'success');
     navigate('/');
   };
 
