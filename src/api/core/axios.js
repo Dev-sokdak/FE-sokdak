@@ -1,8 +1,10 @@
 import axios from "axios";
+import { getCookie } from "../../utils/cookies";
 
 // 인스턴스 생성
 export const instance = axios.create({
-  baseURL : "http://54.180.86.147:80",
+  baseURL : " https://devsokdak.shop",
+  withCredentials: true,
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
@@ -12,10 +14,9 @@ export const instance = axios.create({
 instance.defaults.timeout = 2500;
 
 //인스턴스 request header Authorization 설정
-// TODO - localStorage 방식 미확정
 instance.interceptors.request.use((config) => {
   if (config.headers === undefined) return;
-  const token = localStorage.getItem("id");
+  const token = getCookie();
   config.headers["Authorization"] = `${token}`;
   return config;
 });
