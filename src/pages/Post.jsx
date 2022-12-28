@@ -15,6 +15,7 @@ const Post = () => {
     image:
       'https://static.wanted.co.kr/community/2022/12/841f2c667de5fca565e21da38495942861631678651bb0e5787b33c3cc9fed60',
     boardLike: 2,
+    category: 0,
 
     commentList: [
       {
