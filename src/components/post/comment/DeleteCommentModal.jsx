@@ -1,16 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useToast from '../../../hooks/useToast';
 
 const DeleteCommentModal = ({ setModalOpen }) => {
-  const navigate = useNavigate();
-
   const handleClose = () => {
     setModalOpen(false);
   };
 
   const handleDelete = () => {
-    navigate('/post'); //임시
+    useToast(`삭제되었습니다.`, 'success');
+    setModalOpen(false);
   };
 
   return (
