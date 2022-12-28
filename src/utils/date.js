@@ -1,10 +1,12 @@
 const formatTime = (date) => {
   // 2022. 12. 27.
-  let intl = new Intl.DateTimeFormat("ko", { dateStyle: 'medium' }).format(new Date(date))
+  let intl = new Intl.DateTimeFormat('ko', { dateStyle: 'medium' }).format(
+    new Date(date),
+  );
   // 2022.12.27
-  intl = intl.replaceAll(" ", "").slice(0, -1);
+  intl = intl.replaceAll(' ', '').slice(0, -1);
   return intl;
-}
+};
 
 const elapsedTime = (date) => {
   const start = new Date(date);
@@ -29,13 +31,13 @@ const elapsedTime = (date) => {
 
     if (betweenTime > 0) {
       // 시간, 분 단위만 elapsedTime으로 보여줌
-      if(value.name === 'hour' || value.name === 'minute'){
+      if (value.name === 'hour' || value.name === 'minute') {
         return formatter.format(-betweenTime, value.name);
       }
       return formatTime(date);
     }
   }
   return '방금 전';
-}
+};
 
 export { formatTime, elapsedTime };

@@ -1,6 +1,8 @@
 import React from 'react';
 import theme from '../../../styles/theme';
+import DotComment from './DotComment';
 import styled from 'styled-components';
+import { formatTime } from '../../../utils/date';
 import defaultProfile from '../../../assets/profile_default 1.svg';
 
 // 댓글 작성자의 프로필 이미지 보여주기
@@ -8,23 +10,26 @@ import defaultProfile from '../../../assets/profile_default 1.svg';
 const Comment = ({ comment }) => {
   return (
     <StComment>
-      <StUser>
+      <StCommentWrapper>
         <UserAvatar>
           <img src={defaultProfile} alt="profile" />
         </UserAvatar>
-        <UsernameWrapper>
-          <StCommentUser>
-            <UserBox>
+        <StUserWrapper>
+          <StUserInfo>
+            <StUserBox>
               <ProfileUsername>{comment?.username}</ProfileUsername>
               <UserBadgeBox>
                 <UserBadge data-id="0">웹개발</UserBadge>
                 <UserBadge>신입</UserBadge>
               </UserBadgeBox>
-            </UserBox>
-            <span className="createdAt">{comment?.createdAt}</span>
-          </StCommentUser>
-        </UsernameWrapper>
-      </StUser>
+            </StUserBox>
+            <CreatedAt>{formatTime(comment?.createdAt)}</CreatedAt>
+          </StUserInfo>
+        </StUserWrapper>
+        {/* 자기 댓글인 경우만 DotComment 컴포넌트 보이게 */}
+        <DotComment />
+      </StCommentWrapper>
+
       <CommentContent>{comment?.content}</CommentContent>
     </StComment>
   );
@@ -35,7 +40,7 @@ const StComment = styled.div`
   margin-bottom: 25px;
 `;
 
-const StUser = styled.div`
+const StCommentWrapper = styled.div`
   display: flex;
 `;
 
@@ -58,7 +63,7 @@ const UserAvatar = styled.div`
   }
 `;
 
-const UsernameWrapper = styled.div`
+const StUserWrapper = styled.div`
   display: flex;
   align-items: center;
   /* width: 134px; */
@@ -67,18 +72,13 @@ const UsernameWrapper = styled.div`
   color: ${theme.colors.text3};
 `;
 
-const StCommentUser = styled.div`
+const StUserInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  .createdAt {
-    font-size: 12px;
-    color: ${theme.colors.text4};
-  }
 `;
 
-const UserBox = styled.div`
+const StUserBox = styled.div`
   display: flex;
 `;
 
@@ -134,6 +134,11 @@ const UserBadge = styled.div`
   &[data-id='4'] {
     color: #8958fa;
   }
+`;
+
+const CreatedAt = styled.div`
+  font-size: 12px;
+  color: ${theme.colors.text4};
 `;
 
 const CommentContent = styled.div`

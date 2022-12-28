@@ -12,7 +12,7 @@ const PostTagList = ({ tag }) => {
 };
 
 const StPostTagList = styled.div`
-  margin-bottom: 21px;
+  margin-bottom: 44px;
   display: flex;
 `;
 
