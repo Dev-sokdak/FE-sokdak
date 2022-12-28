@@ -2,17 +2,12 @@ import React from 'react';
 import kakao from '../../assets/kakao_login.svg';
 import styled from 'styled-components';
 
-const KakaoLoginBtn = ({ onClick }) => {
+const KakaoLoginBtn = () => {
   return (
     <KakaoBox>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          onClick();
-        }}
-      >
+      <a href={import.meta.env.VITE_KAKAO_AUTH_URL}>
         <img src={kakao} alt="kakao login" />
-      </button>
+      </a>
       <Caption>kakao</Caption>
     </KakaoBox>
   );
