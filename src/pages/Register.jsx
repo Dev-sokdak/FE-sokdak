@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useDidMountEffect from '../hooks/useDidMountEffect';
 import styled from 'styled-components';
 import Logo from '../assets/logo_mini.svg';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import authAPI from '../api/auth';
+import useToast from '../hooks/useToast';
 
 const schema = yup.object().shape({
   email: yup
@@ -30,6 +32,8 @@ const schema = yup.object().shape({
 const Register = () => {
   // 이메일 유효 여부
   const [emailValid, setEmailValid] = useState(false);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -42,13 +46,38 @@ const Register = () => {
     mode: 'onChange',
   });
 
-  const onClickLogin = (data) => {
-    console.log(data);
+  const checkDuplicated = async () => {
+    const data = getValues('email');
+    await authAPI
+      .emailValidCheck(data)
+      .then((res) => {
+        if (res.data) {
+          useToast('유효한 이메일입니다', 'success');
+        } else {
+          useToast('이미 사용중인 이메일입니다.', 'warning');
+        }
+        setEmailValid(res.data);
+      })
+      .catch((error) => useToast('에러가 발생했습니다.', 'error'));
   };
 
-  const checkDuplicated = () => {
-    // TODO - 이메일 중복 체크 API 연동
-    setEmailValid(true);
+  const signUp = async (data) => {
+    const auth = {
+      userId: data.email,
+      password: data.password,
+    };
+
+    await authAPI
+      .SignUp(auth)
+      .then((res) => {
+        if (res.data.statusCode === 200) {
+          useToast(`${res.data.msg}`, 'success');
+          navigate('/login');
+        } else {
+          useToast(`${res.data.msg}`, 'error');
+        }
+      })
+      .catch((error) => useToast('에러가 발생했습니다.', 'error'));
   };
 
   useDidMountEffect(() => {
@@ -69,7 +98,7 @@ const Register = () => {
             </StLogo>
           </Top>
           <Main>
-            <form onSubmit={handleSubmit(onClickLogin)}>
+            <form onSubmit={handleSubmit(signUp)}>
               <Title>회원가입</Title>
               <StLabel>
                 <label>이메일</label>
@@ -119,7 +148,7 @@ const Register = () => {
               <StButton
                 disabled={!isValid}
                 type="submit"
-                className="registerBtn btn"
+                className="registerBtn"
               >
                 회원가입
               </StButton>

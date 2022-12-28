@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LogoLogin from '../assets/logo_login.svg';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import KakaoLoginBtn from '../components/login/KakaoLoginBtn';
+import authAPI from '../api/auth';
+import useToast from '../hooks/useToast';
 
 const schema = yup.object().shape({
   email: yup.string().email('올바른 이메일을 입력해주세요.').required(''),
@@ -13,6 +15,7 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -22,13 +25,23 @@ const Login = () => {
     mode: 'onChange',
   });
 
-  const [input, setInput] = useState({ email: '', password: '' });
-
-  const handleLogin = () => {
-    if (input.email === '' || input.password === '') {
-      alert('모두 입력해주세요');
-    }
+  const handleLogin = async (data) => {
+    await authAPI
+      .Login({ userId: data.email, password: data.password })
+      .then((res) => {
+        if (res.data.statusCode === 200) {
+          useToast(`${res.data.msg}`, 'success');
+          navigate('/');
+        } else {
+          useToast(`${res.data.msg}`, 'error');
+        }
+      })
+      .catch((error) => useToast('에러가 발생했습니다.', 'error'));
   };
+
+  // const handleKakaoLogin = async () => {
+  //   // await authAPI.KakaoLogin
+  // };
 
   return (
     <StLayout>
@@ -40,7 +53,7 @@ const Login = () => {
             </StLogo>
           </Top>
           <Main>
-            <form onSubmit={handleSubmit()}>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <Title>로그인</Title>
               <StLabel>
                 <label>이메일</label>
@@ -63,12 +76,7 @@ const Login = () => {
                 {...register('password', { required: true })}
               />
               <Typography>{errors.password?.message}</Typography>
-              <StButton
-                type="submit"
-                className="loginBtn"
-                disabled={!isValid}
-                onClick={handleLogin}
-              >
+              <StButton type="submit" className="loginBtn" disabled={!isValid}>
                 로그인
               </StButton>
               <Link to="/register">
