@@ -1,8 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useToast from '../../hooks/useToast';
 
 const SubmitPost = () => {
-  const handleSubmit = () => {};
+  const navigate = useNavigate();
+
+  // TODO 게시글 최초 작성, 수정 후 상세페이지로 redirect
+  const handleSubmit = () => {
+    useToast(`등록되었습니다.`, 'success');
+    navigate('/post/123');
+  };
 
   return (
     <StSubmitPost>
