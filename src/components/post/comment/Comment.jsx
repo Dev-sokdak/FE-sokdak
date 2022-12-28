@@ -2,7 +2,7 @@ import React from 'react';
 import theme from '../../../styles/theme';
 import DotComment from './DotComment';
 import styled from 'styled-components';
-import { elapsedTime } from '../../../utils/date';
+import { formatTime } from '../../../utils/date';
 import defaultProfile from '../../../assets/profile_default 1.svg';
 
 // 댓글 작성자의 프로필 이미지 보여주기
@@ -23,7 +23,7 @@ const Comment = ({ comment }) => {
                 <UserBadge>신입</UserBadge>
               </UserBadgeBox>
             </StUserBox>
-            <CreatedAt>{elapsedTime(`{comment?.createdAt}`)}</CreatedAt>
+            <CreatedAt>{formatTime(comment?.createdAt)}</CreatedAt>
           </StUserInfo>
         </StUserWrapper>
         {/* 자기 댓글인 경우만 DotComment 컴포넌트 보이게 */}
