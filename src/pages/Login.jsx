@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import KakaoLoginBtn from '../components/login/KakaoLoginBtn';
 import authAPI from '../api/auth';
 import useToast from '../hooks/useToast';
+import { setCookie } from '../utils/cookies';
 
 const schema = yup.object().shape({
   email: yup.string().email('올바른 이메일을 입력해주세요.').required(''),
@@ -30,6 +31,7 @@ const Login = () => {
       .Login({ userId: data.email, password: data.password })
       .then((res) => {
         if (res.data.statusCode === 200) {
+          setCookie(res.headers.authorization);
           useToast(`${res.data.msg}`, 'success');
           navigate('/');
         } else {
