@@ -1,20 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PostTag from '../components/write/PostTag';
 import WritePost from '../components/write/WritePost';
 import PostImage from '../components/write/PostImage';
 import SubmitPost from '../components/write/SubmitPost';
+import useToast from '../hooks/useToast';
+import { useNavigate } from 'react-router-dom';
+import postAPI from '../api/post';
 
 const Write = () => {
+  const [tag, setTag] = useState('');
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [imageData, setImageData] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    // 위에서 아래로 순차적이나
+
+    const formData = new FormData(); // 인스턴스 생성
+
+    const json = JSON.stringify({
+      // json 문자열로 만들기
+      title,
+      content,
+      tag,
+    });
+
+    const blob = new Blob([json], {
+      // blob 객체 만들기
+      type: 'application/json',
+    });
+
+    formData.append('image', imageData);
+    formData.append('request', blob);
+
+    // await 통신함수 response가 올 때까지 기다려라
+    await postAPI.writePost(formData).then((res) => {
+      useToast(`등록되었습니다.`, 'success');
+      navigate('/');
+    });
+  };
+
+  // console.log(imageData); // file
+  // useEffect(() => {
+  // }, [imageData]);
+
   return (
     <StLayout>
       <StContainer>
-        <SubmitPost />
+        <SubmitPost
+          handleSubmit={handleSubmit}
+          disabled={!(tag && title && content)}
+        />
         <StWriteWrapper>
           <StWriteContainer>
-            <PostTag />
-            <WritePost />
-            <PostImage />
+            <PostTag setTag={setTag} />
+            <WritePost
+              title={title}
+              setTitle={setTitle}
+              content={content}
+              setContent={setContent}
+            />
+            <PostImage setImageData={setImageData} />
           </StWriteContainer>
         </StWriteWrapper>
       </StContainer>

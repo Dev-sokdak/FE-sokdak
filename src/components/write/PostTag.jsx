@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TagModal from './TagModal';
 import { category } from '../../utils/code';
 import Plus from '../../assets/plus.png';
 import close from '../../assets/close.png';
 
-const PostTag = () => {
+const PostTag = ({ setTag }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState();
 
@@ -16,6 +16,11 @@ const PostTag = () => {
   const handleCancelTag = () => {
     setSelected('');
   };
+
+  // 카테고리 tag string이 선택 -> state값이 변경될 때 렌더링됨
+  useEffect(() => {
+    setTag(category[selected]);
+  }, [selected]);
 
   return (
     <StPostTag>
