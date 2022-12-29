@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 // TODO editPost api 연동
-
 const DotPostPopUp = ({ setShowPopUp, setModalOpen }) => {
   const navigate = useNavigate();
 

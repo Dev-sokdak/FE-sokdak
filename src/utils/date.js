@@ -1,4 +1,7 @@
 const formatTime = (date) => {
+  if(!date){
+    return ;
+  }
   // 2022. 12. 27.
   let intl = new Intl.DateTimeFormat('ko', { dateStyle: 'medium' }).format(
     new Date(date),

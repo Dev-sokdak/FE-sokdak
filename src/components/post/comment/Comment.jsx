@@ -4,33 +4,41 @@ import DotComment from './DotComment';
 import styled from 'styled-components';
 import { formatTime } from '../../../utils/date';
 import defaultProfile from '../../../assets/profile_default 1.svg';
+import { career, jobTag } from '../../../utils/code';
 
 // 댓글 작성자의 프로필 이미지 보여주기
-
 const Comment = ({ comment }) => {
   return (
     <StComment>
       <StCommentWrapper>
         <UserAvatar>
-          <img src={defaultProfile} alt="profile" />
+          <img src={comment?.profileImage ?? defaultProfile} alt="profile" />
         </UserAvatar>
         <StUserWrapper>
           <StUserInfo>
             <StUserBox>
-              <ProfileUsername>{comment?.username}</ProfileUsername>
+              <ProfileUsername>{comment?.nickname}</ProfileUsername>
               <UserBadgeBox>
-                <UserBadge data-id="0">웹개발</UserBadge>
-                <UserBadge>신입</UserBadge>
+                {comment?.userJobTag === 999 ||
+                comment?.userCareerTag === 999 ? (
+                  <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge>
+                ) : (
+                  <>
+                    <UserBadge data-id={comment?.userJobTag}>
+                      {jobTag[comment?.userJobTag]}
+                    </UserBadge>
+                    <UserBadge>{career[comment?.userCareerTag]}</UserBadge>
+                  </>
+                )}
               </UserBadgeBox>
             </StUserBox>
             <CreatedAt>{formatTime(comment?.createdAt)}</CreatedAt>
           </StUserInfo>
         </StUserWrapper>
         {/* 자기 댓글인 경우만 DotComment 컴포넌트 보이게 */}
-        <DotComment />
+        {comment?.commentIscorrect && <DotComment />}
       </StCommentWrapper>
-
-      <CommentContent>{comment?.content}</CommentContent>
+      <CommentContent>{comment?.comment}</CommentContent>
     </StComment>
   );
 };

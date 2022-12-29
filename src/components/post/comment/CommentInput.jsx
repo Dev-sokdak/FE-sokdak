@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../../../styles/theme';
 import MyAvatar from '../MyAvatar';
 import arrow from '../../../assets/arrow-bottom.svg';
+import commentAPI from '../../../api/comment';
+import { useSelector } from 'react-redux';
+import useToast from '../../../hooks/useToast';
 
 // 로그인한 유저 이름 보여주기
-// form submit 할 때 textarea value 값 보내는 기능 추가
-
 const CommentInput = () => {
   const navigate = useNavigate();
   const [comment, setComment] = useState('');
+  const { id } = useParams();
+  const userInfo = useSelector((state) => state.user.user);
+  // const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleComment = (e) => {
     setComment(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    await commentAPI.writeComment(id, { comment }).then((res) => {
+      useToast('댓글이 등록되었습니다.', 'success');
+    });
   };
 
   const LinkToCommunity = () => {
@@ -24,7 +34,7 @@ const CommentInput = () => {
     <>
       <Top>
         <MyAvatar />
-        <div className="myName">로그인한 사용자 이름</div>
+        <div className="myName">{userInfo.nickname}</div>
       </Top>
       <Bottom>
         <form>
@@ -33,11 +43,13 @@ const CommentInput = () => {
             value={comment}
             onChange={handleComment}
           />
-          <button type="submit">등록</button>
+          <SubmitBtn disabled={!comment} onClick={handleSubmit}>
+            등록
+          </SubmitBtn>
         </form>
       </Bottom>
       <StBtn>
-        <button type="button" onClick={LinkToCommunity}>
+        <button onClick={LinkToCommunity}>
           <img src={arrow} alt="arrow" />
           목록으로
         </button>
@@ -85,26 +97,25 @@ const Bottom = styled.div`
       font-size: 14px;
     }
   }
+`;
 
-  button {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    width: 70px;
-    height: 32px;
-    padding: 0;
+const SubmitBtn = styled.button`
+  background-color: ${theme.colors.primary1};
+  color: ${theme.colors.text5};
+  cursor: pointer;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 70px;
+  height: 32px;
+  padding: 0;
+  border-radius: 15px;
+  border: 0;
+  font-size: 15px;
+
+  &:disabled {
     background-color: #f2f4f7;
-    border-radius: 15px;
-    border: 0;
-    font-size: 15px;
     color: #ccc;
-    cursor: default;
-  }
-
-  button:active {
-    background-color: ${theme.colors.primary1};
-    color: ${theme.colors.text5};
-    cursor: pointer;
   }
 `;
 
