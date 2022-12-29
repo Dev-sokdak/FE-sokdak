@@ -4,7 +4,7 @@ import DotCommentPopUp from './DotCommentPopUp';
 import DeleteCommentModal from './DeleteCommentModal';
 import more from '../../../assets/more.png';
 
-const DotComment = () => {
+const DotComment = ({ commentId }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -20,7 +20,9 @@ const DotComment = () => {
           setModalOpen={setModalOpen}
         />
       )}
-      {modalOpen && <DeleteCommentModal setModalOpen={setModalOpen} />}
+      {modalOpen && (
+        <DeleteCommentModal commentId={commentId} setModalOpen={setModalOpen} />
+      )}
       <DotCommentBtn type="button" onClick={handleShowPopUp}>
         <img src={more} alt="more icon" />
       </DotCommentBtn>

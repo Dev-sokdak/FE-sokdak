@@ -1,15 +1,26 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useToast from '../../../hooks/useToast';
+import commentAPI from '../../../api/comment';
 
-const DeleteCommentModal = ({ setModalOpen }) => {
+const DeleteCommentModal = ({ setModalOpen, commentId }) => {
+  const { id } = useParams();
+
+  console.log('댓글아이디', commentId);
+  console.log('게시글아아디', id);
+
   const handleClose = () => {
     setModalOpen(false);
   };
 
-  const handleDelete = () => {
-    useToast(`삭제되었습니다.`, 'success');
-    setModalOpen(false);
+  const handleDelete = async () => {
+    await commentAPI.deleteComment(id, commentId).then((res) => {
+      console.log('삭제테스트', id, commentId);
+      useToast(`삭제되었습니다.`, 'success');
+      setModalOpen(false);
+      window.location.replace('/post');
+    });
   };
 
   return (
