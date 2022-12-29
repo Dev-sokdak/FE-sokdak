@@ -7,7 +7,7 @@ const getMyInfo = async () => {
     const response = await instance.get('/api/mypage');
     return response;
   } catch (error) {
-    useToast('에러가 발생했습니다', 'error');
+    useToast('로그인 후 이용해주세요', 'warning');
   }
 };
 

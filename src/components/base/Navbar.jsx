@@ -2,9 +2,12 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../../assets/logo_mini.svg';
+import useUserInfo from '../../hooks/useUserInfo';
+import UserAvatar from '../user/UserAvatar';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [userInfo, isLoggedIn] = useUserInfo();
 
   const menuList = [
     { kind: 'jobs', name: '채용' },
@@ -41,14 +44,20 @@ const Navbar = () => {
             ))}
           </MenuList>
           <Aside>
-            <ul>
-              <li>
-                <button onClick={linkToRegister}>회원가입</button>
-              </li>
-              <li>
-                <button onClick={linkToLogin}>로그인</button>
-              </li>
-            </ul>
+            {isLoggedIn ? (
+              <Link to="/my">
+                <UserAvatar image={userInfo.profileImage} />
+              </Link>
+            ) : (
+              <ul>
+                <li>
+                  <button onClick={linkToRegister}>회원가입</button>
+                </li>
+                <li>
+                  <button onClick={linkToLogin}>로그인</button>
+                </li>
+              </ul>
+            )}
           </Aside>
         </MainNav>
       </Mainbar>

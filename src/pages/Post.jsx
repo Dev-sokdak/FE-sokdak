@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AsideUser from '../components/post/aside/AsideUser';
 import Action from '../components/post/aside/Action';
@@ -7,12 +7,23 @@ import PostLayout from '../components/post/PostLayout';
 import postAPI from '../api/post';
 
 const Post = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [details, setDetails] = useState('');
+
+  const redirect = () => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  };
 
   const getDetails = async (id) => {
     await postAPI.getPostDetail(id).then((res) => setDetails(res.data));
   };
+
+  useEffect(() => {
+    redirect();
+  }, []);
 
   useEffect(() => {
     getDetails(id);

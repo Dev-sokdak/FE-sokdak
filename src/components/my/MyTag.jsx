@@ -22,12 +22,12 @@ const MyTag = () => {
 
   useEffect(() => {
     setUserJobTag(jobTag[jobSelected]);
-    console.log(jobSelected);
+    // console.log(jobSelected);
   }, [jobSelected]);
 
   useEffect(() => {
     setUserCareerTag(career[careerSelected]);
-    console.log(careerSelected);
+    // console.log(careerSelected);
   }, [careerSelected]);
 
   const handleSubmit = async () => {
