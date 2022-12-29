@@ -2,21 +2,34 @@ import React from 'react';
 import theme from '../../../styles/theme';
 import styled from 'styled-components';
 import defaultProfile from '../../../assets/profile_default 1.svg';
+import { career, jobTag } from '../../../utils/code';
 
 // 게시글 작성 유저의 프로필 이미지 보여주기
-
 const AsideUser = ({ data }) => {
+  // const { profileImage, nickname, userJobTag, userCareerTag } = data;
   return (
     <StUser>
       <UserAvatar>
-        <img src={defaultProfile} alt="profile" />
+        <img src={data.profileImage ?? defaultProfile} alt="profile" />
       </UserAvatar>
       <UsernameWrapper>
         <StPostUser>
-          <ProfileUsername>{data?.username}</ProfileUsername>
+          <ProfileUsername>{data?.nickname}</ProfileUsername>
           <UserBadgeBox>
-            <UserBadge data-id="0">웹개발</UserBadge>
-            <UserBadge>신입</UserBadge>
+            {data?.userJobTag !== 999 ? (
+              <UserBadge className="jobtag">
+                {jobTag[data?.userJobTag]}
+              </UserBadge>
+            ) : (
+              ''
+            )}
+            {data?.userCareerTag !== 999 ? (
+              <UserBadge className="career" data-id={data?.userCareerTag}>
+                {career[data?.userCareerTag]}
+              </UserBadge>
+            ) : (
+              ''
+            )}
           </UserBadgeBox>
         </StPostUser>
       </UsernameWrapper>
