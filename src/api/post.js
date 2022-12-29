@@ -78,7 +78,7 @@ const likePost = async (boardId) => {
 const postAPI = {
   getPosts,
   getPostsByCategory,
-  writePosts,
+  writePost,
   getPostDetail,
   editPost,
   deletePost,
