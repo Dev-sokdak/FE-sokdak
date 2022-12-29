@@ -3,25 +3,37 @@ import theme from '../../../styles/theme';
 import styled from 'styled-components';
 import { formatTime } from '../../../utils/date';
 import defaultProfile from '../../../assets/profile_default 1.svg';
+import { career, jobTag } from '../../../utils/code';
 
 // 게시글 작성 유저의 프로필 이미지 보여주기
-
 const PostUser = ({ data }) => {
   return (
     <StPostUser>
       <UserAvatar>
-        <img src={defaultProfile} alt="profile" />
+        <img src={data.profileImage ?? defaultProfile} alt="profile" />
       </UserAvatar>
       <UsernameWrapper>
         <StUser>
           <UserBox>
-            <ProfileUsername>{data?.username}</ProfileUsername>
+            <ProfileUsername>{data?.nickname}</ProfileUsername>
             <UserBadgeBox>
-              <UserBadge data-id="0">웹개발</UserBadge>
-              <UserBadge>신입</UserBadge>
+              {data?.userJobTag !== 999 ? (
+                <UserBadge className="jobtag">
+                  {jobTag[data?.userJobTag]}
+                </UserBadge>
+              ) : (
+                ''
+              )}
+              {data?.userCareerTag !== 999 ? (
+                <UserBadge className="career" data-id={data?.userCareerTag}>
+                  {career[data?.userCareerTag]}
+                </UserBadge>
+              ) : (
+                ''
+              )}
             </UserBadgeBox>
           </UserBox>
-          <span className="createdAt">{formatTime(data?.createdAt)}</span>
+          <CreatedAt>{formatTime(data.createdAt)}</CreatedAt>
         </StUser>
       </UsernameWrapper>
     </StPostUser>
@@ -64,11 +76,11 @@ const StUser = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
 
-  .createdAt {
-    font-size: 12px;
-    color: ${theme.colors.text4};
-  }
+const CreatedAt = styled.div`
+  font-size: 12px;
+  color: ${theme.colors.text4};
 `;
 
 const UserBox = styled.div`

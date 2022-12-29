@@ -1,12 +1,21 @@
 import useToast from '../hooks/useToast';
 import { instance } from './core/axios';
 
-// 게시글 조회
-// category id값을 보내지 않으면 전체조회
-// id : categoryId
-const getPosts = async (id = null) => {
+// 게시글 전체 조회
+const getPosts = async () => {
   try {
-    const response = await instance.get(`/api/boards?category=${id}`);
+    const response = await instance.get(`/api/boards`);
+    return response;
+  } catch (error) {
+    alert(error.response.data.msg);
+  }
+};
+
+// 게시글 지역 조회
+// id : categoryId
+const getPostsByCategory = async (id) => {
+  try {
+    const response = await instance.get(`/api/boards/category?interestTag=${id}`);
     return response;
   } catch (error) {
     useToast('에러가 발생했습니다', 'error');
@@ -68,7 +77,8 @@ const likePost = async (boardId) => {
 
 const postAPI = {
   getPosts,
-  writePost,
+  getPostsByCategory,
+  writePosts,
   getPostDetail,
   editPost,
   deletePost,

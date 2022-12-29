@@ -6,14 +6,13 @@ import PostUser from './postDetail/PostUser';
 import BottomAction from './postDetail/BottomAction';
 import SharePost from './postDetail/SharePost';
 import DotPost from './postDetail/DotPost';
-// import EmptyCommentList from '../../components/post/EmptyCommentList';
-import CommentList from '../../components/post/comment/CommentList';
+import EmptyCommentList from '../post/comment/EmptyCommentList';
+import CommentList from '../post/comment/CommentList';
 // import EmptyCommentInput from './EmptyCommentInput';
 import CommentInput from '../../components/post/comment/CommentInput';
 
 // TODO 댓글 유무에 따라 댓글 리스트 다르게 보여주기
 // 로그인 유무에 따라 댓글 input 컴포넌트 다르게 보여줄지?
-
 const PostLayout = ({ data }) => {
   return (
     <StPostLayout>
@@ -22,11 +21,10 @@ const PostLayout = ({ data }) => {
         <Title>{data?.title}</Title>
         <Content>{data?.content}</Content>
         <ImageBox>
-          <img src={data.image} />
+          <img src={data?.image} />
         </ImageBox>
-
         {/* <StPostTagList>선택한 태그들</StPostTagList> */}
-        <PostTagList tag={data.category} />
+        <PostTagList tag={data?.category} />
         <StBottomBox>
           <BottomAction data={data} />
           <SharePost />
@@ -34,14 +32,15 @@ const PostLayout = ({ data }) => {
         </StBottomBox>
       </StPostWrapper>
       <StCommentWrapper>
-        {/* 댓글이 없는 경우 */}
-        {/* <EmptyCommentList /> */}
-        {/* 댓글 있는 경우 */}
-        <CommentList comments={data.commentList} />
+        {data.commentList?.length === 0 ? (
+          <EmptyCommentList />
+        ) : (
+          <CommentList comments={data?.commentList} />
+        )}
         {/* 로그인 안된 경우 */}
         {/* <EmptyCommentInput /> */}
         {/* 로그인 된 경우 */}
-        <CommentInput username={data.username} />
+        <CommentInput username={data?.nickname} />
       </StCommentWrapper>
     </StPostLayout>
   );
