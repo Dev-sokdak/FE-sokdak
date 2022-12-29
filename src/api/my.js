@@ -15,7 +15,7 @@ const getMyInfo = async () => {
 // tags : { jobTag, careerTag }
 const setMyJobTag = async (tags) => {
   try {
-    const response = await instance.patch('/api/mypage/jobtag', tags);
+    const response = await instance.patch('/api/mypage/jobTag', tags);
     return response;
   } catch (error) {
     useToast('에러가 발생했습니다', 'error');
