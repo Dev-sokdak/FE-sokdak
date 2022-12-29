@@ -1,9 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImg from '../../assets/my_profile.svg';
+import { useSelector } from 'react-redux';
 
 const ProfileBanner = () => {
-  // 로그인 안했을 때
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const LinkToLogin = () => {
     navigate('/login');
   };
@@ -13,7 +17,7 @@ const ProfileBanner = () => {
   };
 
   return (
-    <BannerBtn onClick={LinkToMypage}>
+    <BannerBtn onClick={isLoggedIn ? LinkToMypage : LinkToLogin}>
       <BannerMessage>
         나를 잘 표현하고 싶다면?
         <br />
