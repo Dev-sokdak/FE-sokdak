@@ -13,8 +13,6 @@
 - 개발자들의 커뮤니티 Sokdak 💬
 - 커리어와 라이프스타일에 대해 자유롭게 이야기 할 수 있어요 🙋🏻   
 
-<hr/>
-
 ## 🧩 Index
 
 - [🌀 Dev Sokdak](#-dev-sokdak)
@@ -28,8 +26,6 @@
   - [6. 트러블 슈팅 👾](#6-트러블-슈팅-)
   - [7. Notion 📔](#7-notion-)
   - [8. Github 🐱](#8-github-)
-
-<hr/>
 
 ## 1. 프로젝트 소개 🗓
 - 설명 : Wanted 커뮤니티 클론 코딩
@@ -66,8 +62,6 @@
 <img src="https://img.shields.io/badge/axios-FCC624?style=for-the-badge&logo=axios&logoColor=black"> 
 <br>
 </div>
-
-<hr/>
 
 ## 3. 기능 명세 🗂
 
@@ -143,19 +137,13 @@
 </div>
 </details>
 
-<hr/>
-
 ## 4. ERD 🧑🏻‍💻
 
 ![Untitled](https://user-images.githubusercontent.com/117730606/209832258-2118cc8d-f543-4413-854f-6e6d7761e0ed.png)
 
-<hr/>
-
 ## 5. API 명세서 🖊
 
 - swagger : https://devsokdak.shop/swagger-ui.html
-
-<hr/>
 
 ## 6. 트러블 슈팅 👾
 
@@ -167,13 +155,9 @@
 | [backend]  |             |
 | [backend]  |             |
 
-<hr/>
-
 ## 7. Notion 📔
 
 https://www.notion.so/synuns/Sokdak-c016b8cb325d4460a0f1a92807082d59
-
-<hr/>
 
 ## 8. Github 🐱
 
