@@ -14,20 +14,15 @@ const PostList = () => {
     if (category) {
       await postAPI
         .getPostsByCategory(category)
-        .then((res) => setPosts(res.data.content))
-        .catch((error) => useToast('정보를 가져올 수 없습니다.', 'error'));
+        .then((res) => setPosts(res.data?.content));
     } else {
-      await postAPI
-        .getPosts()
-        .then((res) => setPosts(res.data.content))
-        .catch((error) => useToast('정보를 가져올 수 없습니다.', 'error'));
+      await postAPI.getPosts().then((res) => setPosts(res.data?.content));
     }
   };
 
   useEffect(() => {
     const currentParams = Object.fromEntries([...searchParams]);
     getPosts(currentParams.category);
-    console.log(posts);
   }, [searchParams]);
 
   return (
