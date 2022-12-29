@@ -5,8 +5,9 @@ import { career } from '../../utils/code';
 import myAPI from '../../api/my';
 import theme from '../../styles/theme';
 import useToast from '../../hooks/useToast';
+// import useUserInfo from '../../hooks/useUserInfo';
 
-const MyTag = () => {
+const MyTag = ({ userInfo }) => {
   const [userJobTag, setUserJobTag] = useState('');
   const [userCareerTag, setUserCareerTag] = useState('');
   const [jobSelected, setJobSelected] = useState();
@@ -22,19 +23,20 @@ const MyTag = () => {
 
   useEffect(() => {
     setUserJobTag(jobTag[jobSelected]);
-    // console.log(jobSelected);
+    // console.log('job', jobSelected);
   }, [jobSelected]);
 
   useEffect(() => {
     setUserCareerTag(career[careerSelected]);
-    // console.log(careerSelected);
+    // console.log('career', careerSelected);
   }, [careerSelected]);
 
   const handleSubmit = async () => {
     const tags = {
-      userJobTag,
-      userCareerTag,
+      userJobTag: jobSelected,
+      userCareerTag: careerSelected,
     };
+    // console.log('tags', tags);
     await myAPI.setMyJobTag(tags).then((res) => {
       useToast(`등록되었습니다.`, 'success');
     });
@@ -50,7 +52,7 @@ const MyTag = () => {
           <StTag>
             <SubTitle>직무</SubTitle>
             <SelectBox>
-              <select onChange={handleJobTag}>
+              <select defaultValue={userInfo.jobTag} onChange={handleJobTag}>
                 {Object.entries(jobTag).map((item) => (
                   <Option key={item[0]} value={item[0]}>
                     {item[1]}
@@ -62,7 +64,10 @@ const MyTag = () => {
           <StTag>
             <SubTitle>경력</SubTitle>
             <SelectBox>
-              <select onChange={handleCareerTag}>
+              <select
+                defaultValue={userInfo.careerTag}
+                onChange={handleCareerTag}
+              >
                 {Object.entries(career).map((item) => (
                   <Option key={item[0]} value={item[0]}>
                     {item[1]}
