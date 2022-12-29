@@ -36,7 +36,9 @@ const Comment = ({ comment }) => {
           </StUserInfo>
         </StUserWrapper>
         {/* 자기 댓글인 경우만 DotComment 컴포넌트 보이게 */}
-        {comment?.commentIscorrect && <DotComment />}
+        {comment?.commentIscorrect && (
+          <DotComment commentId={comment?.commentId} />
+        )}
       </StCommentWrapper>
       <CommentContent>{comment?.comment}</CommentContent>
     </StComment>
