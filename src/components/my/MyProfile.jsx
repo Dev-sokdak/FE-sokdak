@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MyprofileModal from './MyprofileModal';
 import styled from 'styled-components';
+import myAPI from '../../api/my';
 import theme from '../../styles/theme';
 import defaultProfile from '../../assets/profile_default 1.svg';
 import edit from '../../assets/edit.svg';
@@ -13,8 +14,6 @@ const MyProfile = () => {
   const showModal = () => {
     setModalOpen(true);
   };
-
-  console.log(modalOpen);
 
   return (
     <StMyProfile>
@@ -29,10 +28,10 @@ const MyProfile = () => {
             <UserBadge>신입</UserBadge>
           </UserBadgeBox>
         </MyInfo>
-        <button type="button" className="editMyInfo" onClick={showModal}>
+        <EditMyInfo onClick={showModal}>
           <img src={edit} alt="edit icon" />
           수정하기
-        </button>
+        </EditMyInfo>
         {modalOpen && <MyprofileModal setModalOpen={setModalOpen} />}
       </UsernameWrapper>
     </StMyProfile>
@@ -71,27 +70,27 @@ const UsernameWrapper = styled.div`
   width: 134px;
   height: 100%;
   color: ${theme.colors.text3};
+`;
 
-  .editMyInfo {
-    position: absolute;
-    top: 100px;
-    right: 30px;
-    ${theme.common.flexCenter};
-    width: 140px;
-    height: 40px;
-    ${theme.common.borderLine};
-    border-radius: 9999px;
-    font-size: 15px;
-    font-weight: 600;
-    color: ${theme.colors.text2};
-    background: none;
-    cursor: pointer;
+const EditMyInfo = styled.button`
+  position: absolute;
+  top: 100px;
+  right: 30px;
+  ${theme.common.flexCenter};
+  width: 140px;
+  height: 40px;
+  ${theme.common.borderLine};
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 600;
+  color: ${theme.colors.text2};
+  background: none;
+  cursor: pointer;
 
-    img {
-      width: 18px;
-      height: 18px;
-      margin-right: 4px;
-    }
+  img {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
   }
 `;
 
