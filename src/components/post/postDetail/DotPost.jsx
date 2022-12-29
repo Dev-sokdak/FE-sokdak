@@ -4,7 +4,7 @@ import DotPostPopUp from './DotPostPopUp';
 import DeletePostModal from './DeletePostModal';
 import more from '../../../assets/more.png';
 
-const DotPost = () => {
+const DotPost = ({ data }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -15,17 +15,21 @@ const DotPost = () => {
   return (
     <>
       {showPopUp && (
-        <DotPostPopUp setShowPopUp={setShowPopUp} setModalOpen={setModalOpen} />
+        <DotPostPopUp
+          data={data}
+          setShowPopUp={setShowPopUp}
+          setModalOpen={setModalOpen}
+        />
       )}
       {modalOpen && <DeletePostModal setModalOpen={setModalOpen} />}
-      <DotPostBtn type="button" onClick={handleShowPopUp}>
+      <DotPostBtn onClick={handleShowPopUp}>
         <img src={more} alt="more icon" />
       </DotPostBtn>
     </>
   );
 };
 
-const DotPostBtn = styled.div`
+const DotPostBtn = styled.button`
   position: absolute;
   right: 7px;
   bottom: -3px;

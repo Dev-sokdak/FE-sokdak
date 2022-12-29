@@ -2,24 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import write from '../../assets/write.svg';
+import { useSelector } from 'react-redux';
 
 // TODO - userProfile 추가
-// TODO - login 안됐을 시 로그인 페이지로 이동
-
 const PostWriteBox = () => {
   const navigate = useNavigate();
-  // 로그인 안했을 때
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const LinkToLogin = () => {
     navigate('/login');
   };
 
   const LinkToWrite = () => {
-    navigate('/write');
+    navigate('/write', {
+      state: {
+        data: {
+          title: '',
+          content: '',
+          category: '',
+        },
+        isEdit: false,
+      },
+    });
   };
 
   return (
     <StPostWriteBox>
-      <PostWriteButton onClick={LinkToWrite}>
+      <PostWriteButton onClick={isLoggedIn ? LinkToWrite : LinkToLogin}>
         커리어에 대해 자유롭게 이야기 해보세요!
         <img src={write} alt="write" />
       </PostWriteButton>

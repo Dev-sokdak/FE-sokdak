@@ -47,7 +47,6 @@ const MyprofileModal = ({ setModalOpen }) => {
     const formData = new FormData();
 
     formData.append('image', file);
-    console.log(formData);
     await myAPI.setMyProfileImg(formData).then((res) => {
       useToast(`등록되었습니다.`, 'success');
       navigate('/');

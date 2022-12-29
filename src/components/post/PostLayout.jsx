@@ -26,7 +26,7 @@ const PostLayout = ({ data }) => {
         <StBottomBox>
           <BottomAction data={data} />
           <SharePost />
-          <DotPost />
+          <DotPost data={data} />
         </StBottomBox>
       </StPostWrapper>
       <StCommentWrapper>
