@@ -24,14 +24,14 @@ const Post = ({ post }) => {
               <AuthorName>{post.nickname}</AuthorName>
               <AuthorCareer>
                 {post.userJobTag !== 999 ? (
-                  <UserBadge className="jobtag">
+                  <UserBadge className="jobtag" data-id={post.userJobTag}>
                     {jobTag[post.userJobTag]}
                   </UserBadge>
                 ) : (
                   ''
                 )}
                 {post.userCareerTag !== 999 ? (
-                  <UserBadge className="career" data-id={post.userCareerTag}>
+                  <UserBadge className="career">
                     {career[post.userCareerTag]}
                   </UserBadge>
                 ) : (

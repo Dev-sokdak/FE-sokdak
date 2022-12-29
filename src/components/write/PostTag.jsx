@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TagModal from './TagModal';
 import { category } from '../../utils/code';
+import { useLocation } from 'react-router-dom';
 import Plus from '../../assets/plus.png';
 import close from '../../assets/close.png';
 
 const PostTag = ({ setTag }) => {
+  const location = useLocation();
+  const { data } = location.state;
   const [modalOpen, setModalOpen] = useState(false);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(data.category);
 
   const showModal = () => {
     setModalOpen(true);
@@ -29,7 +32,7 @@ const PostTag = ({ setTag }) => {
         <em>*</em>
       </TagMessage>
       <TagWrapper>
-        <OpenTag type="button" onClick={showModal}>
+        <OpenTag onClick={showModal}>
           <img src={Plus} alt="plus icon" className="plus" />
         </OpenTag>
         {modalOpen && (
@@ -39,13 +42,13 @@ const PostTag = ({ setTag }) => {
             setSelected={setSelected}
           />
         )}
-        {!modalOpen && selected ? (
-          <Tag type="button" className="selected" onClick={handleCancelTag}>
+        {!modalOpen && selected !== null ? (
+          <Tag className="selected" onClick={handleCancelTag}>
             {category[selected]}
             <img src={close} alt="close icon" />
           </Tag>
         ) : (
-          <Tag type="button"></Tag>
+          <Tag></Tag>
         )}
       </TagWrapper>
     </StPostTag>
@@ -79,7 +82,7 @@ const TagWrapper = styled.div`
   align-items: center;
 `;
 
-const OpenTag = styled.div`
+const OpenTag = styled.button`
   border: 0;
   cursor: pointer;
   width: 20px;
@@ -92,7 +95,7 @@ const OpenTag = styled.div`
   }
 `;
 
-const Tag = styled.div`
+const Tag = styled.button`
   display: flex;
   justify-content: space-between;
   margin-left: 10px;

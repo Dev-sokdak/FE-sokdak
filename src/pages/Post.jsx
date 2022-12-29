@@ -21,7 +21,7 @@ const Post = () => {
   // };
 
   const getDetails = async (id) => {
-    await postAPI.getPostDetail(id).then((res) => setDetails(res.data));
+    await postAPI.getPostDetail(id).then((res) => setDetails(res?.data));
   };
 
   // useEffect(() => {

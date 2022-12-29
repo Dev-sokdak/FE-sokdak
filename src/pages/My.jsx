@@ -1,23 +1,8 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
 import MyWrapper from '../components/my/MyWrapper';
 
 const My = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const navigate = useNavigate();
-
-  const redirect = () => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  };
-
-  useEffect(() => {
-    redirect();
-  }, []);
-
   return (
     <StLayout>
       <MyWrapper />

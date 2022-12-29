@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import postAPI from '../../../api/post';
+import useToast from '../../../hooks/useToast';
 
-// TODO editPost api 연동
-const DotPostPopUp = ({ setShowPopUp, setModalOpen }) => {
+const DotPostPopUp = ({ data, setShowPopUp, setModalOpen }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const handleDeleteModal = () => {
@@ -12,7 +14,18 @@ const DotPostPopUp = ({ setShowPopUp, setModalOpen }) => {
   };
 
   const handleEditPost = () => {
-    navigate('/write');
+    navigate('/write', {
+      state: {
+        data,
+        isEdit: true,
+      },
+    });
+  };
+
+  const handleDelete = async () => {
+    await postAPI.deletePost(id).then((res) => {
+      useToast('삭제되었습니다.', 'success');
+    });
   };
 
   return (
