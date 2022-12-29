@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import AsideUser from '../components/post/aside/AsideUser';
 import Action from '../components/post/aside/Action';
 import PostLayout from '../components/post/PostLayout';
+import { useSelector } from 'react-redux';
 import postAPI from '../api/post';
 
 const Post = () => {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const { id } = useParams();
-  const [details, setDetails] = useState('');
+  const [details, setDetails] = useState({});
 
   const redirect = () => {
     if (!isLoggedIn) {

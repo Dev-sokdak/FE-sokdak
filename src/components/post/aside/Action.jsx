@@ -10,18 +10,18 @@ const Action = ({ data }) => {
     <StAction>
       <StBox className="likeBox">
         <ActionButton>
-          <img src={data.boardLikeUserId ? BlueLike : Like} alt="likes" />
+          <img src={data?.boardLikeUserId ? BlueLike : Like} alt="likes" />
         </ActionButton>
         <Counts>{data?.likeCnt}</Counts>
       </StBox>
       <StBox className="commentBox box">
         <ActionButton>
           <img
-            src={data.commentIncluding ? BlueComment : Comment}
+            src={data?.commentIncluding ? BlueComment : Comment}
             alt="comments"
           />
         </ActionButton>
-        <Counts>{data?.commentList.length}</Counts>
+        <Counts>{data.commentList?.length}</Counts>
       </StBox>
     </StAction>
   );
