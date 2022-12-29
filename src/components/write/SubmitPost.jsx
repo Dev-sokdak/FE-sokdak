@@ -1,17 +1,18 @@
 import React from 'react';
+
 import styled from 'styled-components';
 
-const SubmitPost = () => {
-  const handleSubmit = () => {};
+const SubmitPost = ({ handleSubmit, disabled }) => {
+  // TODO 게시글 최초 작성, 수정 후 상세페이지로 redirect
 
   return (
     <StSubmitPost>
       <StSubmitWrapper>
-        <div className="submitBox">
-          <button type="submit" className="writeBtn" onClick={handleSubmit}>
+        <SubmitBox>
+          <WriteBtn onClick={handleSubmit} disabled={disabled}>
             등록하기
-          </button>
-        </div>
+          </WriteBtn>
+        </SubmitBox>
       </StSubmitWrapper>
     </StSubmitPost>
   );
@@ -34,31 +35,37 @@ const StSubmitWrapper = styled.div`
   margin: 0 auto;
   height: 100%;
   padding: 10px 0;
+`;
 
-  .submitBox {
-    ${({ theme }) => theme.common.flexCenter}
-    width: 135px;
-    height: 40px;
-    margin-left: auto;
-  }
+const SubmitBox = styled.div`
+  ${({ theme }) => theme.common.flexCenter}
+  width: 135px;
+  height: 40px;
+  margin-left: auto;
+`;
 
-  .writeBtn {
-    width: 100%;
-    min-width: 64px;
-    height: 40px;
-    padding: 0 27px;
+const WriteBtn = styled.button`
+  width: 100%;
+  min-width: 64px;
+  height: 40px;
+  padding: 0 27px;
+  border: none;
+  border-radius: 25px;
+  cursor: default;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #36f;
+  color: #fff;
+
+  &:disabled {
     background-color: #f2f4f7;
-    border: none;
-    border-radius: 25px;
-    cursor: default;
-    font-size: 15px;
-    font-weight: 700;
     color: #ccc;
   }
 
-  .writeBtn:active {
-    background-color: #36f;
-    color: #fff;
+  &:active {
+    background-color: #fff;
+    border: 1px solid #36f;
+    color: #36f;
   }
 `;
 

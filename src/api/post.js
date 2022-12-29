@@ -1,4 +1,5 @@
-import { instance } from "./core/axios";
+import useToast from '../hooks/useToast';
+import { instance } from './core/axios';
 
 // 게시글 전체 조회
 const getPosts = async () => {
@@ -17,18 +18,18 @@ const getPostsByCategory = async (id) => {
     const response = await instance.get(`/api/boards/category?interestTag=${id}`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
 // 게시글 작성
 // data : form-data{ request : json, image : form-data }
-const writePosts = async (data) => {
+const writePost = async (data) => {
   try {
-    const response = await instance.post('/api/boards', data);
+    const response = await instance.post('/api/board', data);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
@@ -38,7 +39,7 @@ const getPostDetail = async (boardId) => {
     const response = await instance.get(`/api/boards/${boardId}`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
@@ -49,7 +50,7 @@ const editPost = async (boardId, data) => {
     const response = await instance.put(`/api/boards/${boardId}`, data);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
@@ -59,7 +60,7 @@ const deletePost = async (boardId) => {
     const response = await instance.delete(`/api/boards/${boardId}`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
@@ -70,7 +71,7 @@ const likePost = async (boardId) => {
     const response = await instance.post(`/api/boards/${boardId}/boardLike`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 

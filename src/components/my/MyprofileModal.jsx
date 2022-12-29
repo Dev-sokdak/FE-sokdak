@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import theme from '../../styles/theme';
+import myAPI from '../../api/my';
+import useToast from '../../hooks/useToast';
 import close from '../../assets/close.png';
 import camera from '../../assets/camera.png';
 
@@ -12,6 +14,7 @@ const MyprofileModal = ({ setModalOpen }) => {
   );
   const [file, setFile] = useState('');
   const fileInput = useRef(null);
+  const [profileImage, setProfileImage] = useState(null);
 
   const handleUpload = () => {
     fileInput.current.click(); // input type=file이 클릭
@@ -38,8 +41,17 @@ const MyprofileModal = ({ setModalOpen }) => {
   };
 
   const handleClose = () => {
-    console.log('hanclose');
     setModalOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+
+    formData.append('profileImage', profileImage);
+
+    await myAPI.setMyProfileImg(formData).then((res) => {
+      useToast(`등록되었습니다.`, 'success');
+    });
   };
 
   return (
@@ -47,15 +59,17 @@ const MyprofileModal = ({ setModalOpen }) => {
       <ModalBackDrop>
         <Modal>
           <ModalHeader>
-            <h2>커뮤니티 프로필</h2>
-            <button type="button" className="closeBtn" onClick={handleClose}>
+            <Title>커뮤니티 프로필</Title>
+            <CloseBtn onClick={handleClose}>
               <img src={close} alt="close icon" />
-            </button>
+            </CloseBtn>
           </ModalHeader>
           <ModalForm>
             <ModalContent>
-              <h3>My 커뮤니티 프로필</h3>
-              <p>속닥 커뮤니티에서 사용되는 프로필입니다.</p>
+              <ModalTitle>My 커뮤니티 프로필</ModalTitle>
+              <ModalSubTitle>
+                속닥 커뮤니티에서 사용되는 프로필입니다.
+              </ModalSubTitle>
               <AvatarCrop>
                 <input
                   type="file"
@@ -64,25 +78,15 @@ const MyprofileModal = ({ setModalOpen }) => {
                   ref={fileInput} //input에 접근 하기위해 useRef사용
                   onChange={handleChange}
                 />
-                <button
-                  type="button"
-                  className="myImage"
-                  onClick={handleUpload}
-                >
+                <MyImage onClick={handleUpload}>
                   <img src={imageSrc} alt="preview-img" />
-                </button>
-                <button
-                  type="button"
-                  className="takeImage"
-                  onClick={handleUpload}
-                >
+                </MyImage>
+                <CameraIcon onClick={handleUpload}>
                   <img src={camera} alt="camera icon" />
-                </button>
+                </CameraIcon>
               </AvatarCrop>
               <ModalBtn>
-                <button type="submit" className="saveImage">
-                  저장하기
-                </button>
+                <SaveImage onClick={handleSubmit}>저장하기</SaveImage>
               </ModalBtn>
             </ModalContent>
           </ModalForm>
@@ -129,27 +133,27 @@ const ModalHeader = styled.div`
   position: relative;
   height: 62px;
   padding-top: 10px;
+`;
 
-  h2 {
-    font-weight: 600;
-    font-size: 16px;
-  }
+const Title = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+`;
 
-  .closeBtn {
-    font-size: 24px;
-    color: ${theme.colors.text4};
-    position: absolute;
-    right: 15px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
+const CloseBtn = styled.button`
+  font-size: 24px;
+  color: ${theme.colors.text4};
+  position: absolute;
+  right: 15px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
 
-    img {
-      width: 20px;
-      height: 20px;
-    }
+  img {
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -170,19 +174,19 @@ const ModalContent = styled.div`
   flex-direction: column;
   padding: 20px 20px 100px;
   max-height: calc(100vh - 242px);
+`;
 
-  h3 {
-    font-weight: 600;
-    font-size: 16px;
-    margin-top: 4px;
-    margin-bottom: 10px;
-  }
+const ModalTitle = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+`;
 
-  p {
-    font-weight: 400;
-    font-size: 13px;
-    color: #888;
-  }
+const ModalSubTitle = styled.div`
+  font-weight: 400;
+  font-size: 13px;
+  color: #888;
 `;
 
 const AvatarCrop = styled.div`
@@ -195,37 +199,37 @@ const AvatarCrop = styled.div`
   input {
     display: none;
   }
+`;
 
-  .myImage {
-    border-radius: 50%;
-    overflow: hidden;
+const MyImage = styled.button`
+  border-radius: 50%;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #d8d8d8;
+
+  img {
     width: 100%;
     height: 100%;
-    background-color: #d8d8d8;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      clip-path: circle(50% at 50% 50%);
-    }
+    object-fit: cover;
+    clip-path: circle(50% at 50% 50%);
   }
+`;
 
-  .takeImage {
-    ${theme.common.flexCenter};
-    position: absolute;
-    right: 2px;
-    bottom: 2px;
-    width: 24px;
-    height: 24px;
-    background: ${theme.colors.bgColor2};
-    ${theme.common.borderLine};
-    border-radius: 100%;
+const CameraIcon = styled.button`
+  ${theme.common.flexCenter};
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 24px;
+  height: 24px;
+  background: ${theme.colors.bgColor2};
+  ${theme.common.borderLine};
+  border-radius: 100%;
 
-    img {
-      width: 15px;
-      height: 16px;
-    }
+  img {
+    width: 15px;
+    height: 16px;
   }
 `;
 
@@ -236,17 +240,18 @@ const ModalBtn = styled.div`
   width: 100%;
   padding: 0 15px 20px;
   background: ${theme.colors.bgColor2};
+`;
 
-  .saveImage {
-    ${theme.common.flexCenter};
-    width: 100%;
-    height: 50px;
-    background: ${theme.colors.primary1};
-    border-radius: 25px;
-    color: ${theme.colors.text5};
-    font-weight: 600;
-    font-size: 16px;
-  }
+const SaveImage = styled.div`
+  ${theme.common.flexCenter};
+  width: 100%;
+  height: 50px;
+  background: ${theme.colors.primary1};
+  border-radius: 25px;
+  color: ${theme.colors.text5};
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
 `;
 
 export default MyprofileModal;
