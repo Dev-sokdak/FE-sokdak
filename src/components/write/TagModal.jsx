@@ -13,8 +13,7 @@ const TagModal = ({ setModalOpen, selected, setSelected }) => {
   };
 
   const handleTag = () => {
-    selected ? setModalOpen(false) : alert('태그를 선택해주세요');
-    setSelected(e.target.id);
+    setModalOpen(false);
   };
 
   return (
@@ -23,7 +22,7 @@ const TagModal = ({ setModalOpen, selected, setSelected }) => {
         <Modal>
           <ModalHeader>
             <Title>태그 선택</Title>
-            <CloseBtn type="button" onClick={handleClose}>
+            <CloseBtn onClick={handleClose}>
               <img src={close} alt="close icon" />
             </CloseBtn>
           </ModalHeader>
@@ -35,7 +34,6 @@ const TagModal = ({ setModalOpen, selected, setSelected }) => {
                   <li>
                     {Object.entries(category).map((item) => (
                       <TagBtn
-                        type="button"
                         className={selected === item[0] ? 'selected' : ''}
                         key={item[0]}
                         id={item[0]}
@@ -48,7 +46,7 @@ const TagModal = ({ setModalOpen, selected, setSelected }) => {
                 </ul>
               </TagsWrapper>
               <ModalBtn>
-                <SaveBtn type="submit" onClick={handleTag}>
+                <SaveBtn onClick={handleTag} disabled={!selected}>
                   완료
                 </SaveBtn>
               </ModalBtn>
@@ -104,7 +102,7 @@ const Title = styled.div`
   font-size: 16px;
 `;
 
-const CloseBtn = styled.div`
+const CloseBtn = styled.button`
   font-size: 24px;
   color: ${({ theme }) => theme.colors.text4};
   position: absolute;
@@ -154,7 +152,7 @@ const TagsWrapper = styled.div`
   }
 `;
 
-const TagBtn = styled.div`
+const TagBtn = styled.button`
   display: inline-block;
   padding: 11px;
   font-size: 15px;
@@ -183,7 +181,7 @@ const ModalBtn = styled.div`
   background: ${({ theme }) => theme.colors.bgColor2};
 `;
 
-const SaveBtn = styled.div`
+const SaveBtn = styled.button`
   ${({ theme }) => theme.common.flexCenter}
   width: 100%;
   height: 50px;
@@ -199,6 +197,11 @@ const SaveBtn = styled.div`
 
   &:hover {
     background: #0249dc;
+  }
+
+  &:disabled {
+    background: #f2f4f7;
+    color: #ccc;
   }
 `;
 

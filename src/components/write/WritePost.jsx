@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-const WritePost = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-
+const WritePost = ({ title, setTitle, content, setContent }) => {
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };

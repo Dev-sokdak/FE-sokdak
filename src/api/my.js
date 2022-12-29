@@ -1,4 +1,5 @@
-import { instance } from "./core/axios";
+import useToast from '../hooks/useToast';
+import { instance } from './core/axios';
 
 // 마이페이지 정보 받기
 const getMyInfo = async () => {
@@ -6,7 +7,7 @@ const getMyInfo = async () => {
     const response = await instance.get('/api/mypage');
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
@@ -17,18 +18,18 @@ const setMyJobTag = async (tags) => {
     const response = await instance.patch('/api/mypage/jobtag', tags);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 
 // 내 프로필 사진 설정
-// form-data 
+// form-data
 const setMyProfileImg = async (img) => {
   try {
     const response = await instance.patch('/api/mypage/profile', img);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 

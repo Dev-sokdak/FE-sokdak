@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '../../styles/theme';
 import MyProfile from './MyProfile';
-import MyprofileModal from './MyprofileModal';
 import MyTag from './MyTag';
 
 const MyWrapper = () => {
