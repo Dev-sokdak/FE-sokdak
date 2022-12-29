@@ -9,7 +9,7 @@ const DotComment = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleShowPopUp = () => {
-    setShowPopUp(true);
+    setShowPopUp(!showPopUp);
   };
 
   return (

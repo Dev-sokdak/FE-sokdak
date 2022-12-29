@@ -23,10 +23,10 @@ const DotCommentPopUp = ({ setShowPopUp, setModalOpen }) => {
 
 const StDotCommentPopUp = styled.div`
   position: absolute;
-  right: -14px;
+  right: -18px;
   top: 27px;
-  width: 86px;
-  font-size: 13px;
+  width: 90px;
+  font-size: 12px;
   font-weight: 700;
   padding: 13px 5px;
   -webkit-box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
