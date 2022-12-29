@@ -14,7 +14,6 @@ const MyprofileModal = ({ setModalOpen }) => {
   );
   const [file, setFile] = useState('');
   const fileInput = useRef(null);
-  const [profileImage, setProfileImage] = useState(null);
 
   const handleUpload = () => {
     fileInput.current.click(); // input type=file이 클릭
@@ -47,11 +46,13 @@ const MyprofileModal = ({ setModalOpen }) => {
   const handleSubmit = async () => {
     const formData = new FormData();
 
-    formData.append('profileImage', profileImage);
-
+    formData.append('image', file);
+    console.log(formData);
     await myAPI.setMyProfileImg(formData).then((res) => {
       useToast(`등록되었습니다.`, 'success');
     });
+
+    setModalOpen(false);
   };
 
   return (

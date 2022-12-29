@@ -3,15 +3,18 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 import MyProfile from './MyProfile';
 import MyTag from './MyTag';
+import useUserInfo from '../../hooks/useUserInfo';
 
 const MyWrapper = () => {
+  const [userInfo] = useUserInfo();
+
   return (
     <StMyWrapper>
       <h1>My 커뮤니티</h1>
       <StMyContainer>
-        <MyProfile />
+        <MyProfile userInfo={userInfo} />
       </StMyContainer>
-      <MyTag />
+      <MyTag userInfo={userInfo} />
     </StMyWrapper>
   );
 };
