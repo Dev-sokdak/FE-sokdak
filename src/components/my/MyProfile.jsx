@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import MyprofileModal from './MyprofileModal';
 import styled from 'styled-components';
-import myAPI from '../../api/my';
 import theme from '../../styles/theme';
 import defaultProfile from '../../assets/profile_default 1.svg';
 import edit from '../../assets/edit.svg';
+import { useSelector } from 'react-redux';
+import { career, jobTag } from '../../utils/code';
 
-// TODO 사용자 정보 보여주기
-
+// TODO - 수정 API 연동
 const MyProfile = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  // 사진 수정 모달
+  const userInfo = useSelector((state) => state.user.user);
+
   const showModal = () => {
     setModalOpen(true);
   };
@@ -18,14 +19,24 @@ const MyProfile = () => {
   return (
     <StMyProfile>
       <UserAvatar>
-        <img src={defaultProfile} alt="profile" />
+        <img src={userInfo.profileImage ?? defaultProfile} alt="profile" />
       </UserAvatar>
       <UsernameWrapper>
         <MyInfo>
-          <ProfileUsername>마장동한우킬러</ProfileUsername>
+          <ProfileUsername>{userInfo.nickname}</ProfileUsername>
           <UserBadgeBox>
-            <UserBadge data-id="0">웹개발</UserBadge>
-            <UserBadge>신입</UserBadge>
+            <UserBadgeBox>
+              {userInfo.jobTag === 999 || userInfo.careerTag === 999 ? (
+                <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge>
+              ) : (
+                <>
+                  <UserBadge data-id={userInfo.jobTag}>
+                    {jobTag[userInfo.jobTag]}
+                  </UserBadge>
+                  <UserBadge>{career[userInfo.careerTag]}</UserBadge>
+                </>
+              )}
+            </UserBadgeBox>
           </UserBadgeBox>
         </MyInfo>
         <EditMyInfo onClick={showModal}>

@@ -4,11 +4,14 @@ import theme from '../../styles/theme';
 import { useNavigate } from 'react-router-dom';
 import UserAvatar from '../user/UserAvatar';
 import UserBadge from '../user/UserBadge';
+import { career, jobTag } from '../../utils/code';
+import { useSelector } from 'react-redux';
 
 const MyProfile = () => {
   const navigate = useNavigate();
+  const userInfo = useSelector((state) => state.user.user);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
-  // 로그인 안했을 때
   const LinkToLogin = () => {
     navigate('/login');
   };
@@ -20,21 +23,29 @@ const MyProfile = () => {
   return (
     <Profile>
       <ProfileTitle>MY 커뮤니티</ProfileTitle>
-      <ProfileButton onClick={LinkToMypage}>
-        <UserAvatar width="38px" height="38px" />
+      <ProfileButton onClick={isLoggedIn ? LinkToMypage : LinkToLogin}>
+        <UserAvatar image={userInfo.profileImage} width="38px" height="38px" />
         <UsernameWrapper>
           {/* 로그인 안된 경우 */}
-          {/* <NotLoggedIn>로그인 해주세요</NotLoggedIn> */}
-          {/* 로그인 된 경우 */}
-          <LoggedIn>
-            <ProfileUsername>마장동한우킬러</ProfileUsername>
-            <UserBadgeBox>
-              {/* 직군, 연차 정보가 부족한 경우 */}
-              <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge>
-              {/* <UserBadge data-id="0">웹개발</UserBadge>
-              <UserBadge>신입</UserBadge> */}
-            </UserBadgeBox>
-          </LoggedIn>
+          {isLoggedIn ? (
+            <LoggedIn>
+              <ProfileUsername>{userInfo.nickname}</ProfileUsername>
+              <UserBadgeBox>
+                {userInfo.jobTag === 999 || userInfo.careerTag === 999 ? (
+                  <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge>
+                ) : (
+                  <>
+                    <UserBadge data-id={userInfo.jobTag}>
+                      {jobTag[userInfo.jobTag]}
+                    </UserBadge>
+                    <UserBadge>{career[userInfo.careerTag]}</UserBadge>
+                  </>
+                )}
+              </UserBadgeBox>
+            </LoggedIn>
+          ) : (
+            <NotLoggedIn>로그인 해주세요</NotLoggedIn>
+          )}
         </UsernameWrapper>
         <ProfileArrow>
           {/* arrow icon */}
