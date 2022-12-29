@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 import defaultProfile from '../../assets/profile_default 1.svg';
 import edit from '../../assets/edit.svg';
-import { useSelector } from 'react-redux';
 import { career, jobTag } from '../../utils/code';
 
 // TODO - 유저 변경 시 태그 최신화
 const MyProfile = ({ userInfo }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  // const userInfo = useSelector((state) => state.user.user);
 
   const showModal = () => {
     setModalOpen(true);

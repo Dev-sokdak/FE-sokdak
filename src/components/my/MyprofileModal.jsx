@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../../styles/theme';
 import myAPI from '../../api/my';
@@ -6,9 +7,8 @@ import useToast from '../../hooks/useToast';
 import close from '../../assets/close.png';
 import camera from '../../assets/camera.png';
 
-// TODO 로그인한 유저 프로필 이미지
-
 const MyprofileModal = ({ setModalOpen }) => {
+  const navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState(
     'https://static.wanted.co.kr/images/profile_default.png',
   );
@@ -50,6 +50,7 @@ const MyprofileModal = ({ setModalOpen }) => {
     console.log(formData);
     await myAPI.setMyProfileImg(formData).then((res) => {
       useToast(`등록되었습니다.`, 'success');
+      navigate('/');
     });
 
     setModalOpen(false);

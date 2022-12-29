@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { jobTag } from '../../utils/code';
 import { career } from '../../utils/code';
 import myAPI from '../../api/my';
 import theme from '../../styles/theme';
 import useToast from '../../hooks/useToast';
-// import useUserInfo from '../../hooks/useUserInfo';
 
 const MyTag = ({ userInfo }) => {
-  const [userJobTag, setUserJobTag] = useState('');
-  const [userCareerTag, setUserCareerTag] = useState('');
-  const [jobSelected, setJobSelected] = useState();
-  const [careerSelected, setCareerSelected] = useState();
+  const navigate = useNavigate();
+  const [jobSelected, setJobSelected] = useState(userInfo.jobTag);
+  const [careerSelected, setCareerSelected] = useState(userInfo.careerTag);
 
   const handleJobTag = (e) => {
     setJobSelected(e.target.value);
@@ -21,24 +20,14 @@ const MyTag = ({ userInfo }) => {
     setCareerSelected(e.target.value);
   };
 
-  useEffect(() => {
-    setUserJobTag(jobTag[jobSelected]);
-    // console.log('job', jobSelected);
-  }, [jobSelected]);
-
-  useEffect(() => {
-    setUserCareerTag(career[careerSelected]);
-    // console.log('career', careerSelected);
-  }, [careerSelected]);
-
   const handleSubmit = async () => {
     const tags = {
       userJobTag: jobSelected,
       userCareerTag: careerSelected,
     };
-    // console.log('tags', tags);
     await myAPI.setMyJobTag(tags).then((res) => {
       useToast(`등록되었습니다.`, 'success');
+      navigate('/');
     });
   };
 
@@ -52,7 +41,7 @@ const MyTag = ({ userInfo }) => {
           <StTag>
             <SubTitle>직무</SubTitle>
             <SelectBox>
-              <select defaultValue={userInfo.jobTag} onChange={handleJobTag}>
+              <select value={jobSelected} onChange={handleJobTag}>
                 {Object.entries(jobTag).map((item) => (
                   <Option key={item[0]} value={item[0]}>
                     {item[1]}
@@ -64,10 +53,7 @@ const MyTag = ({ userInfo }) => {
           <StTag>
             <SubTitle>경력</SubTitle>
             <SelectBox>
-              <select
-                defaultValue={userInfo.careerTag}
-                onChange={handleCareerTag}
-              >
+              <select value={careerSelected} onChange={handleCareerTag}>
                 {Object.entries(career).map((item) => (
                   <Option key={item[0]} value={item[0]}>
                     {item[1]}
@@ -76,7 +62,7 @@ const MyTag = ({ userInfo }) => {
               </select>
             </SelectBox>
           </StTag>
-          <MyPageBtn onClick={handleSubmit}>작성 완료</MyPageBtn>
+          <MyPageBtn onClick={handleSubmit}>완료</MyPageBtn>
         </StFormContainer>
       </StForm>
     </StMyTag>
