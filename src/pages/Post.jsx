@@ -4,28 +4,29 @@ import styled from 'styled-components';
 import AsideUser from '../components/post/aside/AsideUser';
 import Action from '../components/post/aside/Action';
 import PostLayout from '../components/post/PostLayout';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import postAPI from '../api/post';
 
 const Post = () => {
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  // const navigate = useNavigate();
+  // const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const { id } = useParams();
   const [details, setDetails] = useState({});
 
-  const redirect = () => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  };
+  // 새로고침되면 로그인에 상관 없이 redirect되는 문제로 일단 주석처리
+  // const redirect = () => {
+  //   if (!isLoggedIn) {
+  //     navigate('/login');
+  //   }
+  // };
 
   const getDetails = async (id) => {
     await postAPI.getPostDetail(id).then((res) => setDetails(res.data));
   };
 
-  useEffect(() => {
-    redirect();
-  }, []);
+  // useEffect(() => {
+  //   redirect();
+  // }, []);
 
   useEffect(() => {
     getDetails(id);
