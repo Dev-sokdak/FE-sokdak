@@ -7,7 +7,7 @@ const getPosts = async () => {
     const response = await instance.get(`/api/boards`);
     return response;
   } catch (error) {
-    alert(error.response.data.msg);
+    useToast('에러가 발생했습니다', 'error');
   }
 };
 

@@ -11,8 +11,6 @@ import CommentList from '../post/comment/CommentList';
 // import EmptyCommentInput from './EmptyCommentInput';
 import CommentInput from '../../components/post/comment/CommentInput';
 
-// TODO 댓글 유무에 따라 댓글 리스트 다르게 보여주기
-// 로그인 유무에 따라 댓글 input 컴포넌트 다르게 보여줄지?
 const PostLayout = ({ data }) => {
   return (
     <StPostLayout>

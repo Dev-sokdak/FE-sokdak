@@ -16,19 +16,15 @@ const AsideUser = ({ data }) => {
         <StPostUser>
           <ProfileUsername>{data?.nickname}</ProfileUsername>
           <UserBadgeBox>
-            {data?.userJobTag !== 999 ? (
-              <UserBadge className="jobtag">
-                {jobTag[data?.userJobTag]}
-              </UserBadge>
+            {data?.jobTag === 999 || data?.careerTag === 999 ? (
+              <UserBadge>직군, 연차 정보가 부족합니다.</UserBadge>
             ) : (
-              ''
-            )}
-            {data?.userCareerTag !== 999 ? (
-              <UserBadge className="career" data-id={data?.userCareerTag}>
-                {career[data?.userCareerTag]}
-              </UserBadge>
-            ) : (
-              ''
+              <>
+                <UserBadge data-id={data?.jobTag}>
+                  {jobTag[data?.jobTag]}
+                </UserBadge>
+                <UserBadge>{career[data?.careerTag]}</UserBadge>
+              </>
             )}
           </UserBadgeBox>
         </StPostUser>
